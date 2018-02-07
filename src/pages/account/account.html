@@ -1,0 +1,65 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My Account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="mainContainer">
+  <div>
+    <div>
+      <ion-avatar>
+        <img class="centerImage" src="../assets/imgs/default_avatar.png">
+      </ion-avatar>
+    </div>
+    <div class="bottomBorder"></div>
+    <div class="infoContainer">
+      <ion-list inset no-lines>
+        <ion-item>
+          <div>
+            <p><span class="displayFormTitle">Username: </span> <span class="displayFormDetails">{{displayDetails.userName}}</span></p>
+          </div>
+        </ion-item>
+        <ion-item>
+            <div>
+              <p><span class="displayFormTitle">Name: </span> <span class="displayFormDetails">{{displayDetails.personalName}}</span></p>
+            </div>
+        </ion-item>
+        <ion-item>
+            <div>
+              <p><span class="displayFormTitle">Email: </span> <span class="displayFormDetails">{{displayDetails.email}}</span></p>
+            </div>
+        </ion-item>
+        <ion-item>
+            <div>
+              <p><span class="displayFormTitle">Date of Birth: </span> <span class="displayFormDetails">{{displayDetails.dateOfBirth}}</span></p>
+            </div>
+        </ion-item>
+        <ion-item>
+            <div>
+              <p><span class="displayFormTitle">Height: </span> <span class="displayFormDetails">{{displayDetails.height}}</span></p>
+            </div>
+        </ion-item>
+        <ion-item>
+            <div>
+              <p><span class="displayFormTitle">Weight: </span> <span class="displayFormDetails">{{displayDetails.weight}}</span></p>
+            </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="buttons">
+        <button ion-button class="emerContactButton">
+          Emergency Contacts
+        </button>
+        <button ion-button>
+          Edit
+        </button> 
+      </div>
+    </div>
+  </div>
+</ion-content>
