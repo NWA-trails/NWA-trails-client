@@ -1,65 +1,113 @@
 
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>My Account</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title >My Account</ion-title>
+    <ion-buttons end><button ion-button icon-only (click)='toggleEditing()'><ion-icon name="settings"></ion-icon></button></ion-buttons>
+  </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content padding class="mainContainer">
   <div>
-    <div>
-      <ion-avatar>
-        <img class="centerImage" src="../assets/imgs/default_avatar.png">
-      </ion-avatar>
-    </div>
-    <div class="bottomBorder"></div>
-    <div class="infoContainer">
-      <ion-list inset no-lines>
-        <ion-item>
-          <div>
-            <p><span class="displayFormTitle">Username: </span> <span class="displayFormDetails">{{displayDetails.userName}}</span></p>
+
+      <div style="width: 100%; text-align: center; position: relative;">
+          <div style="display: inline-block; height: 50%; width: 50%;">
+            <img src="../assets/imgs/default_avatar.png" />
           </div>
-        </ion-item>
-        <ion-item>
+          <!-->Work with justin about making a camera component to use in both pages<-->
+          <div *ngIf="isEditing" style="position: absolute; right: 15%; bottom: 0">
+            <button ion-button round icon-only (click)='toggleEditing()'>
+              <ion-icon name="camera"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+    <div class="bottomBorder"></div>
+
+    <div>
+      <div class="infoContainer">
+        <ion-list inset no-lines>
+          <ion-item>
             <div>
-              <p><span class="displayFormTitle">Name: </span> <span class="displayFormDetails">{{displayDetails.personalName}}</span></p>
+              <p><span class="displayFormTitle">Username: </span> <span class="displayFormDetails">{{displayDetails.userName}}</span></p>
             </div>
-        </ion-item>
-        <ion-item>
-            <div>
-              <p><span class="displayFormTitle">Email: </span> <span class="displayFormDetails">{{displayDetails.email}}</span></p>
-            </div>
-        </ion-item>
-        <ion-item>
-            <div>
-              <p><span class="displayFormTitle">Date of Birth: </span> <span class="displayFormDetails">{{displayDetails.dateOfBirth}}</span></p>
-            </div>
-        </ion-item>
-        <ion-item>
-            <div>
-              <p><span class="displayFormTitle">Height: </span> <span class="displayFormDetails">{{displayDetails.height}}</span></p>
-            </div>
-        </ion-item>
-        <ion-item>
-            <div>
-              <p><span class="displayFormTitle">Weight: </span> <span class="displayFormDetails">{{displayDetails.weight}}</span></p>
-            </div>
-        </ion-item>
-      </ion-list>
+          </ion-item>
+          <div *ngIf="!isEditing">
+            <ion-item>
+                <div>
+                  <p><span class="displayFormTitle">Name: </span> <span class="displayFormDetails">{{displayDetails.personalName}}</span></p>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div>
+                  <p><span class="displayFormTitle">Email: </span> <span class="displayFormDetails">{{displayDetails.email}}</span></p>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div>
+                  <p><span class="displayFormTitle">Date of Birth: </span> <span class="displayFormDetails">{{displayDetails.dateOfBirth}}</span></p>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div>
+                  <p><span class="displayFormTitle">Height: </span> <span class="displayFormDetails">{{displayDetails.height}}</span></p>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div>
+                  <p><span class="displayFormTitle">Weight: </span> <span class="displayFormDetails">{{displayDetails.weight}}</span></p>
+                </div>
+            </ion-item>
+          </div>
+          <div *ngIf="isEditing">
+            <form (ngSubmit)="saveDetailsChanges()">
+              <ion-item>
+                <ion-label text-left>Name: </ion-label>
+                <ion-input text-right type="text" placeholder={{displayDetails.personalName}} [(ngModel)]="formResult.personalName" name="personalName"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label text-left>Email: </ion-label>
+                <ion-input text-right type="text" placeholder={{displayDetails.email}} [(ngModel)]="formResult.email" name="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label text-left>Date of Birth: </ion-label>
+                <ion-input text-right type="text" placeholder={{displayDetails.dateOfBirth}} [(ngModel)]="formResult.dateOfBirth" name="dateOfBirth"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label text-left>Height: </ion-label>
+                <ion-input text-right type="text" placeholder={{displayDetails.height}} [(ngModel)]="formResult.height" name="height"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label text-left>Weight: </ion-label>
+                <ion-input text-right type="text" placeholder={{displayDetails.weight}} [(ngModel)]="formResult.weight" name="weight"></ion-input>
+              </ion-item>
+              <div class="editButtons">
+                <div style="width: 50%; float:left; padding:2%;">
+                  <button ion-button type="submit" block>
+                    SAVE
+                  </button>
+                </div>
+                <div style="width: 50%; float: right; padding:2%;">
+                  <button ion-button full (click)='cancelDetailsChanges()'> 
+                    CANCEL
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ion-list>
+      </div>
     </div>
 
     <div>
-      <div class="buttons">
-        <button ion-button class="emerContactButton">
-          Emergency Contacts
+      <div *ngIf="!isEditing">
+        <button ion-button full class="emergencyContactsButton"> 
+            Emergency Contacts
         </button>
-        <button ion-button>
-          Edit
-        </button> 
       </div>
     </div>
+
   </div>
 </ion-content>

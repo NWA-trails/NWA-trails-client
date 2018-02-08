@@ -9,6 +9,8 @@ import { Details } from './details';
 })
 export class AccountPage {
 
+  isEditing: boolean = false;
+
   displayDetails: Details = {
     "userName": "john123",
     "personalName": "John Doe",
@@ -18,12 +20,46 @@ export class AccountPage {
     "weight": "125"
   }
 
+  formResult = {
+    "personalName": "",
+    "email": "",
+    "dateOfBirth": "",
+    "height": "",
+    "weight": ""
+  };
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    //Call to server to get userDetails
+    //Check files for account information
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AccountPage');
+  }
+
+  toggleEditing() {
+    this.isEditing = !this.isEditing;
+  }
+
+  saveDetailsChanges() {
+    this.isEditing = false;
+
+    for (var property in this.formResult) {
+      if (this.formResult[property] != "") {
+        this.displayDetails[property] = this.formResult[property];
+      }
+      
+    }
+  }
+
+  cancelDetailsChanges() {
+    this.isEditing = false;
+    this.resetForm();
+  }
+
+  resetForm() {
+    for (var property in this.formResult) {
+      this.formResult[property] = this.displayDetails[property];
+    }
   }
 
 }
