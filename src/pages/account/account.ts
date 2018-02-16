@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Details } from './details';
 
+import { EmergencyContactsPage } from "../emergency-contacts/emergency-contacts";
+
 @IonicPage()
 @Component({
   selector: 'page-account',
@@ -60,6 +62,10 @@ export class AccountPage {
     for (var property in this.formResult) {
       this.formResult[property] = this.displayDetails[property];
     }
+  }
+
+  emergencyContacts() {
+    this.navCtrl.push(EmergencyContactsPage);
   }
 
 }

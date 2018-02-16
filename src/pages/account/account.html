@@ -17,7 +17,7 @@
             <img src="../assets/imgs/default_avatar.png" />
           </div>
           <!-->Work with justin about making a camera component to use in both pages<-->
-          <div *ngIf="isEditing" style="position: absolute; right: 15%; bottom: 0">
+          <div *ngIf="isEditing" style="position: absolute; right: 14%; bottom: 0">
             <button ion-button round icon-only>
               <ion-icon name="camera"></ion-icon>
             </button>
@@ -59,7 +59,12 @@
                 <div>
                   <p><span class="displayFormTitle">Weight: </span> <span class="displayFormDetails">{{displayDetails.weight}}</span></p>
                 </div>
-            </ion-item>
+            </ion-item>          
+            <div *ngIf="!isEditing" style = "padding-top: 3%;">
+              <button ion-button block class="emergencyContactsButton" (click)='emergencyContacts()'> 
+                  Emergency Contacts
+              </button>
+            </div>
           </div>
           <div *ngIf="isEditing">
             <form (ngSubmit)="saveDetailsChanges()">
@@ -85,12 +90,12 @@
               </ion-item>
               <div class="editButtons">
                 <div style="width: 50%; float:left; padding:2%;">
-                  <button ion-button type="submit" block>
+                  <button ion-button block type="submit">
                     SAVE
                   </button>
                 </div>
                 <div style="width: 50%; float: right; padding:2%;">
-                  <button ion-button full (click)='cancelDetailsChanges()'> 
+                  <button ion-button block (click)='cancelDetailsChanges()'> 
                     CANCEL
                   </button>
                 </div>
@@ -100,14 +105,5 @@
         </ion-list>
       </div>
     </div>
-
-    <div>
-      <div *ngIf="!isEditing">
-        <button ion-button full class="emergencyContactsButton"> 
-            Emergency Contacts
-        </button>
-      </div>
-    </div>
-
   </div>
 </ion-content>

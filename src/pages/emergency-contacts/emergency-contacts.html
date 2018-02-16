@@ -1,0 +1,38 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Emergency Contacts</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div #mainContainer>
+    <div #contactsContainer>
+      <ion-list>
+        <ion-list-header>
+          Contacts
+        </ion-list-header>
+        <ion-item *ngFor = "let contact of contacts">
+          <div>
+            <p><span class="contactDetailTitle">Contact-Name: </span> <span class="contactDetails">{{contact.personalName}}</span></p>
+            <p><span class="contactDetailTitle">Primary Phone: </span> <span class="contactDetails">{{contact.primaryPhone}}</span></p>
+            <p><span class="contactDetailTitle">Secondary-Name: </span> <span class="contactDetails">{{contact.secondaryPhone}}</span></p>
+          </div>
+          <button ion-button large item-end color="secondary" (click)="onCall(contact.primaryPhone, contact.secondaryPhone)">
+            <ion-icon name = "call"></ion-icon>
+          </button>
+        </ion-item>
+        <ion-item>
+          <button ion-button round full>
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+
+</ion-content>

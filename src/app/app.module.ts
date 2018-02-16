@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AccountPage } from '../pages/account/account';
 import { ConditionPage } from '../pages/condition/condition';
+import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-contacts";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +25,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     HomePage,
     TabsPage,
     AccountPage,
-    ConditionPage
+    ConditionPage,
+    EmergencyContactsPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     HomePage,
     TabsPage,
     AccountPage,
-    ConditionPage
+    ConditionPage,
+    EmergencyContactsPage
   ],
   providers: [
     StatusBar,
