@@ -10,7 +10,7 @@ import { ConditionPage } from '../condition/condition';
 })
 export class TabsPage {
 
-  tab1Root = AccountPage;
+  tab1Root = HomePage;
   tab2Root = ContactPage;
   tab3Root = AccountPage;
   tab4Root = ConditionPage;
