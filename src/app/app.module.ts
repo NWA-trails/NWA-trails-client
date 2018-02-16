@@ -14,6 +14,7 @@ import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-con
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -48,6 +49,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     SplashScreen,
     Camera,
     Geolocation,
+    CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
