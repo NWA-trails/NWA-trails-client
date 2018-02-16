@@ -14,7 +14,7 @@ export class MapPage {
 
   constructor(public navCtrl: NavController) {}
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
     this.loadLeafletMap();
   }
