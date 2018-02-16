@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { MapPage } from '../pages/map/map';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -27,6 +28,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     TabsPage,
     AccountPage,
     ConditionPage,
+    MapPage,
     EmergencyContactsPage
   ],
   imports: [
@@ -42,6 +44,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     TabsPage,
     AccountPage,
     ConditionPage,
+    MapPage,
     EmergencyContactsPage
   ],
   providers: [
