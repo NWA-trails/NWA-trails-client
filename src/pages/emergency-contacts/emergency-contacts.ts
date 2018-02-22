@@ -28,7 +28,7 @@ export class EmergencyContactsPage {
               private callNumber: CallNumber) {
 
   }
-
+  
 
   onCall(primaryPhone, secondaryPhone) {
     let alert = this.alertCtrl.create();
@@ -72,6 +72,25 @@ export class EmergencyContactsPage {
     });
 
     toast.present();
+  }
+
+  addContact() {
+    let prompt = this.alertCtrl.create({
+      title: 'Create New Emeregency Contact',
+      inputs: [
+        {
+          name: 'Name',
+          placeholder: 'Contact Name...'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        }
+      ]
+    });
+
+    prompt.present();
   }
 
   ionViewDidLoad() {
