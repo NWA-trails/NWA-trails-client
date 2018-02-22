@@ -6,4 +6,15 @@ page-map {
         width: 100%;
         height: 100%;
     }
+    .button-wrapper {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        border: 1px solid red;
+    }
+
+    .emergencyButton {
+       margin: 0 auto;
+       z-index: 1800;
+    }
 }
