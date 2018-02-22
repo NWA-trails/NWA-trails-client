@@ -17,9 +17,9 @@
         </ion-list-header>
         <ion-item *ngFor = "let contact of contacts">
           <div>
-            <p><span class="contactDetailTitle">Contact-Name: </span> <span class="contactDetails">{{contact.personalName}}</span></p>
-            <p><span class="contactDetailTitle">Primary Phone: </span> <span class="contactDetails">{{contact.primaryPhone}}</span></p>
-            <p><span class="contactDetailTitle">Secondary-Name: </span> <span class="contactDetails">{{contact.secondaryPhone}}</span></p>
+            <p><span class="contactDetailTitle">Name: </span> <span class="contactDetails">{{contact.personalName}}</span></p>
+            <p><span class="contactDetailTitle">Primary: </span> <span class="contactDetails">{{contact.primaryPhone}}</span></p>
+            <p><span class="contactDetailTitle">Secondary: </span> <span class="contactDetails">{{contact.secondaryPhone}}</span></p>
           </div>
           <button ion-button large item-end color="secondary" (click)="onCall(contact.primaryPhone, contact.secondaryPhone)">
             <ion-icon name = "call"></ion-icon>
@@ -27,7 +27,7 @@
         </ion-item>
         <ion-item>
           <button ion-button round full>
-            <ion-icon name="add"></ion-icon>
+            <ion-icon name="add" (click)="addContact()"></ion-icon>
           </button>
         </ion-item>
       </ion-list>
