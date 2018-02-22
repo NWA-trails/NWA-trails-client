@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { contactDetails } from './contactDetails'
+import { CallNumber } from '@ionic-native/call-number'
 
 @IonicPage()
 @Component({
@@ -11,20 +12,21 @@ export class EmergencyContactsPage {
 
   contacts: contactDetails[] = [
     {
-      "personalName": "John Doe",
-      "primaryPhone": "479-555-5214",
-      "secondaryPhone": "501-555-5521"
+      "personalName": "Michael Hinkley",
+      "primaryPhone": "469-955-1980",
+      "secondaryPhone": "555-555-5555"
     },
     {
       "personalName": "Al Smith",
-      "primaryPhone": "479-525-5514",
-      "secondaryPhone": "501-532-5111"
+      "primaryPhone": "555-555-5555",
+      "secondaryPhone": "555-555-5555"
     }
 ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public alertCtrl: AlertController, public toastCtrl: ToastController) {
-    
+              public alertCtrl: AlertController, public toastCtrl: ToastController,
+              private callNumber: CallNumber) {
+
   }
   
 
@@ -54,11 +56,15 @@ export class EmergencyContactsPage {
     });
 
     alert.addButton('Cancel');
-    
+
     alert.present();
   }
 
   initCall(phoneNumber) {
+    this.callNumber.callNumber(phoneNumber, true)
+      .then(() => console.log('Launched dialer: '+phoneNumber))
+      .catch(() => console.log('Error launching dialer'));
+
     let toast = this.toastCtrl.create({
       message: 'Phone number called: ' + phoneNumber,
       duration: 3000
