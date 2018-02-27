@@ -64,9 +64,14 @@ export class EmergencyContactsPage {
   }
 
   initCall(phoneNumber) {
+<<<<<<< HEAD
     phoneNumber = "4793877620";
 
     this.callNumber.callNumber(phoneNumber, false)
+=======
+    console.log("emergency call");
+    this.callNumber.callNumber(phoneNumber, true)
+>>>>>>> b89dbfecfe747bd2f5b66a8ce4a072a1479b35dd
       .then(() => console.log('Launched dialer: '+phoneNumber))
       .catch(() => console.log('Error launching dialer'));
 
