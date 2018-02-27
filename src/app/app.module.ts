@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { IonicStorageModule } from '@ionic/storage'
 
 import { MapPage } from '../pages/map/map';
 import { AboutPage } from '../pages/about/about';
@@ -33,7 +34,8 @@ import { Geolocation } from '@ionic-native/geolocation';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

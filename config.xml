@@ -91,4 +91,5 @@
     <allow-navigation href="http://192.168.0.31:8100" />
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
     <engine name="ios" spec="4.5.4" />
+    <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
 </widget>

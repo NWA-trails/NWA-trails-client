@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { contactDetails } from './contactDetails'
 import { CallNumber } from '@ionic-native/call-number'
+import { Storage } from '@ionic/storage';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 @IonicPage()
 @Component({
@@ -12,25 +14,17 @@ export class EmergencyContactsPage {
 
   isEditing: boolean = false;
 
-  contacts: contactDetails[] = [
-    {
-      "contactId": 1,
-      "personalName": "Michael Hinkley",
-      "primaryPhone": "469-955-1980",
-      "secondaryPhone": "555-555-5555"
-    },
-    {
-      "contactId": 2,
-      "personalName": "Al Smith",
-      "primaryPhone": "555-555-5555",
-      "secondaryPhone": "555-555-5555"
-    }
-];
+  contacts: contactDetails[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public toastCtrl: ToastController,
-              private callNumber: CallNumber) {
-
+              private callNumber: CallNumber, private storage: Storage) {
+    storage.get('contacts').then((val) => {
+      if (val != null) {
+        this.contacts = val;
+      }
+    });
+    
   }
 
   onCall(primaryPhone, secondaryPhone) {
@@ -64,37 +58,36 @@ export class EmergencyContactsPage {
   }
 
   initCall(phoneNumber) {
-<<<<<<< HEAD
     phoneNumber = "4793877620";
 
-    this.callNumber.callNumber(phoneNumber, false)
-=======
-    console.log("emergency call");
     this.callNumber.callNumber(phoneNumber, true)
->>>>>>> b89dbfecfe747bd2f5b66a8ce4a072a1479b35dd
       .then(() => console.log('Launched dialer: '+phoneNumber))
       .catch(() => console.log('Error launching dialer'));
-
-    let toast = this.toastCtrl.create({
-      message: 'Phone number called: ' + this.callNumber.isCallSupported(),
-      duration: 3000
-    });
-
-    toast.present();
   }
 
   addContact() {
     let prompt = this.alertCtrl.create({
-      title: 'Create New Emeregency Contact',
+      title: 'Create Emergency Contact',
       inputs: [
         {
-          name: 'Name',
-          placeholder: 'Contact Name...'
+          name: 'contactName',
+          placeholder: 'Contact Name'
+        },
+        {
+          name: 'primaryPhone',
+          placeholder: 'Primary Phone Number'
+        },
+        {
+          name: 'secondaryPhone',
+          placeholder: 'Secondary Phone Number'
         },
       ],
       buttons: [
         {
-          text: 'Cancel'
+          text: 'Save',
+          handler: data => {
+            this.saveContact(data);
+          }
         }
       ]
     });
@@ -108,7 +101,7 @@ export class EmergencyContactsPage {
       inputs: [
         {
           name: 'contactName',
-          placeholder: contact.personalName
+          placeholder: contact.contactName
         },
         {
           name: 'primaryPhone',
@@ -126,8 +119,12 @@ export class EmergencyContactsPage {
             if (this.validatePhoneNumber(data.primaryPhone)) {
 
             }
-
-            this.saveContact(contact, data);
+          }
+        },
+        {
+          text: 'Delete',
+          handler: data => {
+            this.deleteContact(contact)
           }
         },
         {
@@ -139,8 +136,19 @@ export class EmergencyContactsPage {
     prompt.present();
   }
 
-  saveContact(contact, data) {
-    
+  saveContact(contact) {
+    this.contacts.push(contact);
+    this.storage.set('contacts', this.contacts);
+  }
+
+  deleteContact(contact) {
+    var index = this.contacts.indexOf(contact);
+
+    if (index > -1) {
+      this.contacts.splice(index, 1);
+    }
+
+    this.storage.set('contacts', this.contacts);
   }
 
   validatePhoneNumber(phoneNumber): boolean {

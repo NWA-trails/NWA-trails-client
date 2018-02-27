@@ -1,6 +1,5 @@
 export interface contactDetails {
-    contactId: number;
-    personalName: string;
+    contactName: string;
     primaryPhone: string;
     secondaryPhone: string;
 }

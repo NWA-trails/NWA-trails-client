@@ -18,7 +18,7 @@
         </ion-list-header>
         <ion-item *ngFor = "let contact of contacts">
           <div>
-            <p><span class="contactDetailTitle">Name: </span> <span class="contactDetails">{{contact.personalName}}</span></p>
+            <p><span class="contactDetailTitle">Name: </span> <span class="contactDetails">{{contact.contactName}}</span></p>
             <p><span class="contactDetailTitle">Primary: </span> <span class="contactDetails">{{contact.primaryPhone}}</span></p>
             <p><span class="contactDetailTitle">Secondary: </span> <span class="contactDetails">{{contact.secondaryPhone}}</span></p>
           </div>
@@ -30,8 +30,8 @@
           </button>
         </ion-item>
         <ion-item *ngIf="isEditing">
-          <button ion-button round full>
-            <ion-icon name="add" (click)="addContact()"></ion-icon>
+          <button ion-button round full  (click)="addContact()">
+            <ion-icon name="add"></ion-icon>
           </button>
         </ion-item>
       </ion-list>
