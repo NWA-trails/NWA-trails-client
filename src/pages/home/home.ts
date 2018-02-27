@@ -1,14 +1,5 @@
 
 //this is the maps problem
-import {
- GoogleMaps,
- GoogleMap,
- GoogleMapsEvent,
- GoogleMapOptions,
- CameraPosition,
- MarkerOptions,
- Marker
-} from '@ionic-native/google-maps';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { NavController } from 'ionic-angular';

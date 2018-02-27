@@ -89,4 +89,6 @@
         <variable name="API_KEY_FOR_IOS" value="AIzaSyDSQKTQrjZG7LBoWf4z7gl-1hOl56tgTeE" />
     </plugin>
     <allow-navigation href="http://192.168.0.31:8100" />
+    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+    <engine name="ios" spec="4.5.4" />
 </widget>

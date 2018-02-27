@@ -3,6 +3,7 @@
 
   <ion-navbar>
     <ion-title>Emergency Contacts</ion-title>
+    <ion-buttons end><button ion-button icon-only (click)='toggleEditing()'><ion-icon name="create"></ion-icon></button></ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -21,11 +22,14 @@
             <p><span class="contactDetailTitle">Primary: </span> <span class="contactDetails">{{contact.primaryPhone}}</span></p>
             <p><span class="contactDetailTitle">Secondary: </span> <span class="contactDetails">{{contact.secondaryPhone}}</span></p>
           </div>
-          <button ion-button large item-end color="secondary" (click)="onCall(contact.primaryPhone, contact.secondaryPhone)">
+          <button ion-button large item-end color="secondary" (click)="onCall(contact.primaryPhone, contact.secondaryPhone)" *ngIf="!isEditing"> 
             <ion-icon name = "call"></ion-icon>
           </button>
+          <button ion-button large item-end color="danger" (click)="editContact(contact)" *ngIf="isEditing">
+            <ion-icon name="create"></ion-icon>
+          </button>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="isEditing">
           <button ion-button round full>
             <ion-icon name="add" (click)="addContact()"></ion-icon>
           </button>
