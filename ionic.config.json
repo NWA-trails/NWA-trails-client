@@ -1,8 +1,0 @@
-{
-  "name": "NWA-trails",
-  "app_id": "af5caea1",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
-}
