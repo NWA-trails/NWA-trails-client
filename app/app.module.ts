@@ -19,6 +19,7 @@ import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
 import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     Geolocation,
     CallNumber,
     File,
+    HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

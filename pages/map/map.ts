@@ -3,8 +3,9 @@ import { NavController, Platform } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 import leaflet from "leaflet";
 import { File } from '@ionic-native/file';
+import { HTTP } from '@ionic-native/http';
 
-declare let cordova: any;
+
 
 @Component({
   selector: 'page-map',
@@ -15,7 +16,7 @@ export class MapPage {
 
 
 
-  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private platform: Platform) {}
+  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private platform: Platform, private http: HTTP) {}
 
   ionViewDidLoad() {
     this.loadLeafletMap();
@@ -35,6 +36,7 @@ onLocationError(e) {
 
   loadLeafletMap(){
     this.map = leaflet.map('mapId');
+    if(this.map == undefined) alert("map is undefined");
     leaflet.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'edupala.com © ionic LeafLet'
     }).addTo(this.map);
@@ -45,26 +47,44 @@ onLocationError(e) {
     });
     //test to see if it works...checks out
     //var tailFeaturesCollection = {"type":"Feature","id":3,"geometry":{"type":"Point","coordinates":[-94.2176600832399,36.4118875806067]},"properties":{"objectid":3,"id":35,"milepost":35.000031,"city":"Bentonville","county":"Benton","y_coord":36.411881,"x_coord":-94.217653,"gps_x":"94° 13' 3.551\" W","gps_y":"36° 24' 42.772\" N","mile_marker":"Greenway Mile Marker: 35","mlabel":35}};
-    //var trailFeaturesCollection;
-    this.platform.ready().then(() => {console.log(cordova.file.datadirectory)});
-    this.file.checkDir(cordova.file.applicationDirectory, '/src/assets/GeoJSON').then(_ =>
-   console.log('Directory exists')
-).catch(err => console.log('Directory doesnt exist'));
-    this.file.checkFile(cordova.file.applicationDirectory + "assets/GeoJSON/", "trailJSON.geojson").then(_ => {
-      this.file.readAsText(cordova.file.applicationDirectory + "assets/GeoJSON", "trailJSON.geojson").then(geoData => {
-        console.log(geoData);
-      }).catch(err => {
-        console.log("Error reading file");
-      });
-    }).catch(err => {
-      console.log("error checking file");
-      console.log("assets/GeoJSON", "trailJSON.geojson");
-    })
+//
+    //this.http.get('../../assets/GeoJSON/trailJSON.geojson').map
+
+    this.file.readAsText(this.file.applicationDirectory +'www/assets/GeoJSON','trailJSON.geojson')
+    .then((geoData) => {
+      alert("all good");
+
+      var val = 4871448;
+      var hi = [];
+
+      for(var i = 0; i < 6; ++i)
+      {
+        hi[i] = geoData[val];
+        val++;
+      }
 
 
-    //leaflet.geoJSON(JSON.parse(String(trailFeaturesCollection))).addTo(this.map);
+      alert(hi);
+      alert(geoData[4871451]);
+      var trailFeaturesCollection = JSON.parse(geoData);
+      alert(trailFeaturesCollection[0]);
+
+    this.addFeatureToMap(trailFeaturesCollection);
+    }).catch(err => alert(err));
+
+
+
+
+
+
+
 
     //on('locationfound', this.onLocationFound).on('locationerror', this.onLocationError);
+  }
+
+  addFeatureToMap(feature)
+  {
+     leaflet.geoJSON(feature).addTo(this.map);
   }
 
   emergencyCall() {
