@@ -1,0 +1,56 @@
+page-account {
+
+    .mainContainer {
+        background: rgb(55, 196, 180);
+    }
+
+    .centerImage {
+        display: block;
+        height: 50%;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .bottomBorder {
+        margin-top: 10px;
+        border-bottom: 2px solid gray;
+    }
+
+    .displayFormTitle {
+        font-weight: bold;
+
+    }
+
+    .displayFormDetails {
+        float: right;
+    }
+
+    .emergencyContactsButton {
+       width: 90%;
+       margin: 0 auto;
+    }
+
+    .editButtons {
+        width: 94%;
+        margin: 0 auto;
+    }
+
+    .image {
+        height: 5vw; 
+        width: 5vw; 
+        border: 2px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 5px gray;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+   }
+   
+   .circle-pic{
+        width:50%;
+        height:50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+   }
+}
