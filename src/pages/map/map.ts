@@ -50,24 +50,11 @@ onLocationError(e) {
 //
     //this.http.get('../../assets/GeoJSON/trailJSON.geojson').map
 
-    this.file.readAsText(this.file.applicationDirectory +'www/assets/GeoJSON','trailJSON.geojson')
+    this.file.readAsText(this.file.applicationDirectory +'www/assets/GeoJSON','example.geojson')
     .then((geoData) => {
-      alert("all good");
 
-      var val = 4871448;
-      var hi = [];
-
-      for(var i = 0; i < 6; ++i)
-      {
-        hi[i] = geoData[val];
-        val++;
-      }
-
-
-      alert(hi);
-      alert(geoData[4871451]);
       var trailFeaturesCollection = JSON.parse(geoData);
-      alert(trailFeaturesCollection[0]);
+
 
     this.addFeatureToMap(trailFeaturesCollection);
     }).catch(err => alert(err));
