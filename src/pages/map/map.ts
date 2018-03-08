@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, ToastController, AlertController } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
+import { Storage } from '@ionic/storage';
 import leaflet from "leaflet";
 import { File } from '@ionic-native/file';
 import { HTTP } from '@ionic-native/http';
-
-
+import { contactDetails } from './contactDetails';
 
 @Component({
   selector: 'page-map',
@@ -13,10 +13,14 @@ import { HTTP } from '@ionic-native/http';
 })
 export class MapPage {
   map: leaflet.Map;
+  isEmergencyCallEnabled: boolean = false;
+  buttonColor: string = 'default';
+  contact: contactDetails;
 
 
 
-  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private platform: Platform, private http: HTTP) {}
+  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private platform: Platform, 
+              private http: HTTP, public toastCtrl: ToastController, private storage: Storage, public alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
     this.loadLeafletMap();
@@ -74,8 +78,26 @@ onLocationError(e) {
      leaflet.geoJSON(feature).addTo(this.map);
   }
 
+  onTouch() {
+    this.buttonColor = 'danger';
+  }
+
+  initEmergencyCall() {
+    this.buttonColor = 'secondary';
+
+    if (!this.isEmergencyCallEnabled) {
+      this.isEmergencyCallEnabled = true;
+      this.verifyEmergencyCall();
+    }
+  }
+
+  onRelease() {
+    this.buttonColor = 'default';
+    this.isEmergencyCallEnabled = false;
+  }
+
   emergencyCall() {
-    var phoneNumber = "469-955-1980";
+    var phoneNumber = "479-387-7620";
     console.log("emergency call");
     this.callNumber.callNumber(phoneNumber, true)
       .then(() => console.log('Launched dialer: '+phoneNumber))
@@ -83,7 +105,53 @@ onLocationError(e) {
 
  }
 
+ verifyEmergencyCall() {
+  let prompt = this.alertCtrl.create({
+    title: 'Are you sure you want to make an Emergency Call?',
+    message: this.contact == null ? 
+      'Making this call will contact 9-1-1, gather information about your current location, send your primary emergency contact a notification, and will notify yourself of the gathered information.' : 
+      'Making this call will contact 9-1-1, gather information about your current location, send ' + this.contact.contactName + ' a notification to number ' + this.contact.primaryPhone + ' and will notify yourself of the gathered information'
+    ,
+    buttons: [
+      {
+        text: 'Agree',
+        handler: () => {
+          this.sendAlertToEmerContact();
+          this.emergencyCall();
+        }
+      },
+      {
+        text: 'Disagree',
+        handler: () => {
+          let toast = this.toastCtrl.create({
+            message: 'Emergency Call Cancled.',
+            duration: 2000,
+            position: 'top'
+          });
+    
+          toast.present();
+        }
+      }
+    ]
+  });
 
+  prompt.present();
+  
+ }
 
-
+ sendAlertToEmerContact() {
+  this.storage.get('contacts').then((val) => {
+    if (val != null) {
+      this.contact = val[0];
+      
+      let toast = this.toastCtrl.create({
+        message: 'Sending info to: ' + this.contact.contactName + '  ' + this.contact.primaryPhone,
+        duration: 2000,
+        position: 'top'
+      });
+    
+      toast.present();
+    }
+  });
+ }
 }

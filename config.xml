@@ -3,7 +3,7 @@
     <name>NWA-trails</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.31:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -94,9 +94,9 @@
     <plugin name="mx.ferreyra.callnumber" spec="0.0.2" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
     <plugin name="call-number" spec="^1.0.1" />
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
-    <plugin name="cordova-plugin-advanced-http" spec="^1.11.0" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^6.3.0" />
     <engine name="browser" spec="^5.0.3" />
+    <plugin name="cordova-plugin-advanced-http" spec="^1.11.0" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
 </widget>

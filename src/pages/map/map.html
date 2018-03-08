@@ -12,6 +12,8 @@
 
   </div>
   <div class="button-wrapper">
-     <button ion-button class="emergencyButton" (click)="emergencyCall()" >Emergency!!</button>
- </div>
+    <button class="emergencyButton" ion-button ion-long-press round [interval]="3000" (onPressStart)="onTouch()" (onPressing)="initEmergencyCall()" (onPressEnd)="onRelease()" [color]="buttonColor">
+      <ion-icon name="heart"></ion-icon>
+    </button>
+  </div>
 </ion-content>

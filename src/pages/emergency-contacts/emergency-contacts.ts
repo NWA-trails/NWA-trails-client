@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, AlertController, ToastController }
 import { contactDetails } from './contactDetails'
 import { CallNumber } from '@ionic-native/call-number'
 import { Storage } from '@ionic/storage';
-import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 @IonicPage()
 @Component({
