@@ -50,7 +50,10 @@ export class AccountPage {
     }
 
     this.camera.getPicture(options).then((imageData) => {
-      this.base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.base64Image = 'data:image/jpg;base64,' + imageData;
+
+      let cameraImageSelector = document.getElementById('camera-image');
+      cameraImageSelector.setAttribute('src', this.base64Image);
     }, (error) => {
       console.log('unable to take picture');
     });

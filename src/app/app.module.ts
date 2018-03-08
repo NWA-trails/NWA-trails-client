@@ -18,6 +18,7 @@ import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HTTP } from '@ionic-native/http';
 import { LongPressModule } from 'ionic-long-press';
+import { SMS } from '@ionic-native/sms';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { LongPressModule } from 'ionic-long-press';
     Camera,
     Geolocation,
     CallNumber,
+    SMS,
     File,
     HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
