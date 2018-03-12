@@ -14,6 +14,7 @@ export class ConditionPage {
   }
 
   takePicture() {
+
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
       targetWidth: 1000,
@@ -21,6 +22,8 @@ export class ConditionPage {
     }).then((imageData) => {
       this.picture = "data:image/jpeg;base64," + imageData;
     }, (err) => {
+      alert("prob");
+      alert(err);
       console.log(err);
     });
   }
@@ -31,5 +34,12 @@ export class ConditionPage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  submit()
+  {
+    alert("Thank you for submitting a conditions report!");
+//re-run the view load function if the page has one declared
+    this.navCtrl.push(ConditionPage);
   }
 }
