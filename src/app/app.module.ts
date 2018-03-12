@@ -12,6 +12,7 @@ import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-con
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
 import { File } from '@ionic-native/file';
@@ -47,13 +48,14 @@ import { SMS } from '@ionic-native/sms';
   providers: [
     StatusBar,
     SplashScreen,
+    AndroidPermissions,
     Camera,
     Geolocation,
     CallNumber,
     SMS,
     File,
     HTTP,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

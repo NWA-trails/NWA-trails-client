@@ -6,21 +6,31 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content text-wrap>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="showAlert()"><ion-icon name="help"></ion-icon> </button>
+    <ion-content #popoverContent padding class="popover-page">
+      <div #popoverText class="text-to-change">
+        <p>
+          The purpose of this screen is to report any adverse trail conditions to trail managers as well as fellow app users. <br />
+          To submit a notice: <br />
+          1. Take a picture of the problem. <br />
+          2. Right a brief description describing the problem. <br />
+          3. Press Submit! <br />
+        </p>
+      </div>
+    </ion-content>
+  </ion-fab>
+
+  <div style="width: 100%; text-align: center; position: relative;">
+    <div style="display: inline-block; height: 50%; width: 50%;">
+      <img [src]="picture" *ngIf="picture" />
+      <img src="assets/imgs/default_avatar.png" *ngIf="!picture" />
+    </div>
+  </div>
+  <button ion-button full class="pictureButton" (click)="takePicture()">Take a Picture</button>
   <ion-item>
-    <p>The purpose of this screen is to report any adverse trail conditions to trail managers as well as fellow app users.
-    <p>To submit a notice:</p>
-    <p>1. Take a picture of the problem.</p>
-    <p>2. Right a brief description describing the problem.</p>
-    <p>3. Press Submit!</p>
-    <p><button ion-button full class="pictureButton"(click)="takePicture()">Take a Picture</button></p>
+    <ion-label color="primary">Description:</ion-label>
+    <ion-textarea placeholder="What is the condition that you're reporting?"></ion-textarea>
   </ion-item>
-  <ion-item>
-    <p>Latest Picture:</p>
-    <img [src]="picture" *ngIf="picture" />
-  </ion-item>
-  <ion-item>
-        <ion-label color="primary">Description:</ion-label>
-        <ion-input placeholder="What is the condition that you're reporting?"></ion-input>
-      </ion-item>
 </ion-content>

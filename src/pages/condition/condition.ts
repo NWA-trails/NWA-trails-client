@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-condition',
@@ -8,7 +9,7 @@ import { Camera } from '@ionic-native/camera';
 })
 export class ConditionPage {
   public picture: string;
-  constructor(public navCtrl: NavController, public camera: Camera) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public camera: Camera) {
 
   }
 
@@ -18,10 +19,17 @@ export class ConditionPage {
       targetWidth: 1000,
       targetHeight: 1000
     }).then((imageData) => {
-      // imageData is a base64 encoded string
       this.picture = "data:image/jpeg;base64," + imageData;
     }, (err) => {
       console.log(err);
     });
+  }
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Help',
+      subTitle: '<p> The purpose of this screen is to report any adverse trail conditions to trail managers as well as fellow app users. <br /> To submit a notice: <br /> 1. Take a picture of the problem. <br /> 2. Right a brief description describing the problem. <br /> 3. Press Submit!</p>',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }
