@@ -86,7 +86,8 @@
       "cordova-plugin-file": {},
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-statusbar": {},
-      "cordova-sms-plugin": {}
+      "cordova-sms-plugin": {},
+      "cordova-plugin-android-permissions": {}
     },
     "platforms": [
       "ios",

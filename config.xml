@@ -101,4 +101,5 @@
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^6.3.0" />
     <engine name="browser" spec="^5.0.3" />
+    <plugin name="cordova-plugin-android-permissions" spec="~1.0.0" />
 </widget>
