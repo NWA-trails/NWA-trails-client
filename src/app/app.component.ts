@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({

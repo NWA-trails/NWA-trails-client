@@ -94,11 +94,13 @@
     <plugin name="mx.ferreyra.callnumber" spec="0.0.2" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
     <plugin name="call-number" spec="^1.0.1" />
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="cordova-sms-plugin" spec="^0.1.11" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^6.3.0" />
     <engine name="browser" spec="^5.0.3" />
+    <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
+    <allow-navigation href="http://10.101.70.144:8100" />
 </widget>
