@@ -20,7 +20,7 @@ export class MapPage {
 
 
 
-  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private http: HttpClient,
+  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private http: HTTP,
               public toastCtrl: ToastController, private storage: Storage, public alertCtrl: AlertController,
               private sms: SMS) {}
 
