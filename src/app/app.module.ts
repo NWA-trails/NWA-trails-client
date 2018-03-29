@@ -9,6 +9,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AccountPage } from '../pages/account/account';
 import { ConditionPage } from '../pages/condition/condition';
 import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-contacts";
+import { LoginPage } from "../pages/login/login";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,9 +18,11 @@ import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
 import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
+import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http';
 import { LongPressModule } from 'ionic-long-press';
 import { SMS } from '@ionic-native/sms';
+import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
 @NgModule({
   declarations: [
@@ -28,13 +31,15 @@ import { SMS } from '@ionic-native/sms';
     AccountPage,
     ConditionPage,
     MapPage,
-    EmergencyContactsPage
+    EmergencyContactsPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    LongPressModule
+    LongPressModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +48,8 @@ import { SMS } from '@ionic-native/sms';
     AccountPage,
     ConditionPage,
     MapPage,
-    EmergencyContactsPage
+    EmergencyContactsPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -55,7 +61,8 @@ import { SMS } from '@ionic-native/sms';
     SMS,
     File,
     HTTP,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AuthenticationServiceProvider
   ]
 })
 export class AppModule { }
