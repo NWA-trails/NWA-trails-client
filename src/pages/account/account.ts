@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Details } from './details';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { HttpClient } from '@angular/common/http';
 import { EmergencyContactsPage } from "../emergency-contacts/emergency-contacts";
 
 @IonicPage()
@@ -33,9 +33,13 @@ export class AccountPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private camera: Camera) {
-    
+              private camera: Camera, private http : HttpClient) {
+
+               
+
+
   }
+
 
   toggleEditing() {
     this.isEditing = !this.isEditing;
@@ -66,7 +70,7 @@ export class AccountPage {
       if (this.formResult[property] != "") {
         this.displayDetails[property] = this.formResult[property];
       }
-      
+
     }
   }
 

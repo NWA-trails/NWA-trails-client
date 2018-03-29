@@ -7,6 +7,8 @@ import { File } from '@ionic-native/file';
 import { contactDetails } from './contactDetails';
 import { SMS } from '@ionic-native/sms';
 import { HTTP } from '@ionic-native/http';
+import { HttpClient } from '@angular/common/http';
+
 
 
 @Component({
@@ -21,7 +23,7 @@ export class MapPage {
 
 
 
-  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private http: HTTP,
+  constructor(public navCtrl: NavController, private callNumber: CallNumber, private file: File, private http: HttpClient,
               public toastCtrl: ToastController, private storage: Storage, public alertCtrl: AlertController,
               private sms: SMS) {}
 
@@ -49,7 +51,10 @@ export class MapPage {
       alert("Cannot find location.")
       alert(e.message);
     });
-
+    
+    this.http.get('https://nwa-trails-webservice.herokuapp.com/user/getAll').subscribe( res => {
+      console.log(res);
+    });
 
 //
     //  alert(this.file.applicationDirectory);

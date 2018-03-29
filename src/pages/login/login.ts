@@ -21,7 +21,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    this.authenticationServiceProvider.login();
+    //this.authenticationServiceProvider.login();
     console.log('called login');
   }
 

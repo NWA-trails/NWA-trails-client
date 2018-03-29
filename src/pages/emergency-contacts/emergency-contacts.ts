@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController, ToastController }
 import { contactDetails } from './contactDetails'
 import { CallNumber } from '@ionic-native/call-number'
 import { Storage } from '@ionic/storage';
+import { HttpClient } from '@angular/common/http';
+
 
 @IonicPage()
 @Component({
@@ -17,13 +19,23 @@ export class EmergencyContactsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public toastCtrl: ToastController,
-              private callNumber: CallNumber, private storage: Storage) {
+              private callNumber: CallNumber, private storage: Storage, private http : HttpClient) {
     storage.get('contacts').then((val) => {
       if (val != null) {
         this.contacts = val;
       }
     });
-    
+
+    //this will be moved to login so emergency contacts are recieved immediately
+    var username = "testuser1";
+   this.http.get('https://nwa-trails-webservice.herokuapp.com/emergencycontact/findByUsername?username=' + username).subscribe( res => {
+   
+     this.contacts.push({contactName: res[0].first_name + " " + res[0].last_name,
+                    primaryPhone: res[0].phone_number, secondaryPhone: ""});
+
+
+
+   })
   }
 
   onCall(primaryPhone, secondaryPhone) {
@@ -153,7 +165,7 @@ export class EmergencyContactsPage {
   validatePhoneNumber(phoneNumber): boolean {
     if (phoneNumber == null) {
       return true;
-    } 
+    }
 
     this.showErrorToast(phoneNumber);
   }
