@@ -12,8 +12,13 @@ export class Credentials {
   }
 }
 
+export class User {
+  username: string;
+}
+
 @Injectable()
 export class AuthenticationServiceProvider {
+  currentUser: User;
 
   baseURL: string = "https://nwa-trails-webservice.herokuapp.com/user/";
 
@@ -22,11 +27,7 @@ export class AuthenticationServiceProvider {
   }
 
   public login(credentials) {
-    this.http.get('https://nwa-trails-webservice.herokuapp.com/user/').subscribe(
-      response => {
-        console.log(response);
-      }
-    );
+    return this.http.post('https://nwa-trails-webservice.herokuapp.com/user/validate',credentials);
   }
 
 }

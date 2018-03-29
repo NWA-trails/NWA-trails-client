@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Storage } from '@ionic/storage';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -16,13 +11,36 @@ import { AuthenticationServiceProvider } from '../../providers/authentication-se
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authenticationServiceProvider: AuthenticationServiceProvider) {
+  credentials = { username: '', password: ''};
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public authenticationServiceProvider: AuthenticationServiceProvider,
+    public storage: Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    this.authenticationServiceProvider.login();
-    console.log('called login');
+  }
+
+  public login(credentials) {
+    this.authenticationServiceProvider.login(this.credentials).subscribe(
+      response => {
+        console.log("response: ")
+        console.log(response);
+        this.storage.set('username',this.credentials.username).then(
+          success => {
+            this.navCtrl.setRoot(TabsPage);
+          },
+          error => {
+            console.log("Failed to save username \"" + this.credentials.username + "\" to storage");
+          }
+        );
+      },
+      err => {
+        console.log("error: ");
+        console.log(err);
+      }
+    );
   }
 
 }
