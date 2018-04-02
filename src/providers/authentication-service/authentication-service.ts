@@ -30,4 +30,8 @@ export class AuthenticationServiceProvider {
     return this.http.post('https://nwa-trails-webservice.herokuapp.com/user/validate',credentials);
   }
 
+  public register(userDetails) {
+    return this.http.post('https://nwa-trails-webservice.herokuapp.com/user/register',userDetails);
+  }
+
 }

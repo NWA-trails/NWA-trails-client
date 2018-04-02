@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
 import { Storage } from '@ionic/storage';
 import { TabsPage } from '../tabs/tabs';
+import { RegisterPage } from '../register/register';
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authenticationServiceProvider: AuthenticationServiceProvider,
     public storage: Storage) {
+      
   }
 
   ionViewDidLoad() {
@@ -41,6 +43,10 @@ export class LoginPage {
         console.log(err);
       }
     );
+  }
+
+  public createAccount() {
+    this.navCtrl.push(RegisterPage);
   }
 
 }

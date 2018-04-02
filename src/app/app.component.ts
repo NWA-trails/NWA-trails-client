@@ -3,8 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
-import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
+import { InitialPage } from "../pages/initial/initial";
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +15,7 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.rootPage = LoginPage;
+      this.rootPage = InitialPage;
       statusBar.styleDefault();
       splashScreen.hide();
 

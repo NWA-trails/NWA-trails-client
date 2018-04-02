@@ -28,7 +28,9 @@ export class MapPage {
               private sms: SMS) {}
 
   ionViewDidLoad() {
-    this.loadLeafletMap();
+    if(this.map == undefined) {
+      this.loadLeafletMap();
+    }
   }
 
   loadLeafletMap(){
@@ -50,10 +52,6 @@ export class MapPage {
     }).on('locationerror', e => {
       alert("Cannot find location.")
       alert(e.message);
-    });
-    
-    this.http.get('https://nwa-trails-webservice.herokuapp.com/user/getAll').subscribe( res => {
-      console.log(res);
     });
 
 //

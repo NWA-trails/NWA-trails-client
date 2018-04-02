@@ -10,6 +10,8 @@ import { AccountPage } from '../pages/account/account';
 import { ConditionPage } from '../pages/condition/condition';
 import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-contacts";
 import { LoginPage } from "../pages/login/login";
+import { RegisterPage } from "../pages/register/register";
+import { InitialPage } from "../pages/initial/initial";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,7 +34,9 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     ConditionPage,
     MapPage,
     EmergencyContactsPage,
-    LoginPage
+    LoginPage,
+    RegisterPage,
+    InitialPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     ConditionPage,
     MapPage,
     EmergencyContactsPage,
-    LoginPage
+    LoginPage,
+    RegisterPage,
+    InitialPage
   ],
   providers: [
     StatusBar,
