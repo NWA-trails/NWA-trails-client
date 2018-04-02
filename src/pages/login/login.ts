@@ -4,6 +4,7 @@ import { AuthenticationServiceProvider } from '../../providers/authentication-se
 import { Storage } from '@ionic/storage';
 import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
+import { HttpClient } from '@angular/common/http';
 
 @IonicPage()
 @Component({
@@ -16,8 +17,8 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authenticationServiceProvider: AuthenticationServiceProvider,
-    public storage: Storage) {
-      
+    public storage: Storage, public http : HttpClient) {
+
   }
 
   ionViewDidLoad() {
@@ -31,6 +32,7 @@ export class LoginPage {
         console.log(response);
         this.storage.set('username',this.credentials.username).then(
           success => {
+            this.setEmergencyContactsLocally()
             this.navCtrl.setRoot(TabsPage);
           },
           error => {
@@ -43,6 +45,18 @@ export class LoginPage {
         console.log(err);
       }
     );
+
+
+  }
+
+  setEmergencyContactsLocally() {
+    var username = this.storage.get('username').then((username) => {
+      this.http.get('https://nwa-trails-webservice.herokuapp.com/emergencycontact/findByUsername?username=' + username).subscribe( res => {
+        console.log(res);
+        this.storage.set('emergencyContacts', res);
+
+      });
+    });
   }
 
   public createAccount() {

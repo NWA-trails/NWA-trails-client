@@ -24,19 +24,14 @@ export class EmergencyContactsPage {
       if (val != null) {
         this.contacts = val;
       }
+      storage.get('username').then((name) =>{
+        console.log("name in ec, ", name);
+      })
     });
-
-    //this will be moved to login so emergency contacts are recieved immediately
-    var username = "testuser1";
-   this.http.get('https://nwa-trails-webservice.herokuapp.com/emergencycontact/findByUsername?username=' + username).subscribe( res => {
-   
-     this.contacts.push({contactName: res[0].first_name + " " + res[0].last_name,
-                    primaryPhone: res[0].phone_number, secondaryPhone: ""});
-
-
-
-   })
   }
+
+
+
 
   onCall(primaryPhone, secondaryPhone) {
     let alert = this.alertCtrl.create();
@@ -148,14 +143,33 @@ export class EmergencyContactsPage {
   }
 
   saveContact(contact) {
-    this.contacts.push(contact);
-    this.storage.set('contacts', this.contacts);
+    this.storage.get('username').then((username) => {
+    contact.username = username.toUpperCase();
+
+    this.http.post('https://nwa-trails-webservice.herokuapp.com/emergencycontact/add', contact).subscribe( response => {
+        contact.id = response;
+        this.contacts.push(contact);
+        this.storage.set('contacts', this.contacts);
+    });
+    });
+
+
+
+
+
+
   }
 
   deleteContact(contact) {
     var index = this.contacts.indexOf(contact);
 
     if (index > -1) {
+      var deletingContact = this.contacts[index];
+      console.log(deletingContact);
+      this.http.post('https://nwa-trails-webservice.herokuapp.com/emergencycontact/delete', deletingContact).subscribe( response => {
+        console.log(response);
+
+      });
       this.contacts.splice(index, 1);
     }
 
