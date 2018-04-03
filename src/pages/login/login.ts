@@ -32,7 +32,7 @@ export class LoginPage {
         console.log(response);
         this.storage.set('username',this.credentials.username).then(
           success => {
-            this.setEmergencyContactsLocally()
+            this.setEmergencyContactsLocally(); //
             this.navCtrl.setRoot(TabsPage);
           },
           error => {
@@ -57,6 +57,10 @@ export class LoginPage {
 
       });
     });
+    this.storage.get('emergencyContacts').then((contact) => {
+      console.log("e-contacts at login: ", contact);
+    });
+
   }
 
   public createAccount() {
