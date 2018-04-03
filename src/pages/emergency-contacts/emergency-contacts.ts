@@ -20,7 +20,7 @@ export class EmergencyContactsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, public toastCtrl: ToastController,
               private callNumber: CallNumber, private storage: Storage, private http : HttpClient) {
-    storage.get('contacts').then((val) => {
+    storage.get('emergencyContacts').then((val) => {
       if (val != null) {
         this.contacts = val;
       }
@@ -149,7 +149,7 @@ export class EmergencyContactsPage {
     this.http.post('https://nwa-trails-webservice.herokuapp.com/emergencycontact/add', contact).subscribe( response => {
         contact.id = response;
         this.contacts.push(contact);
-        this.storage.set('contacts', this.contacts);
+        this.storage.set('emergencyContacts', this.contacts);
     });
     });
 
@@ -173,7 +173,7 @@ export class EmergencyContactsPage {
       this.contacts.splice(index, 1);
     }
 
-    this.storage.set('contacts', this.contacts);
+    this.storage.set('emergencyContacts', this.contacts);
   }
 
   validatePhoneNumber(phoneNumber): boolean {
