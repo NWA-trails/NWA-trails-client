@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
 import { Storage } from '@ionic/storage';
 import { TabsPage } from '../tabs/tabs';
@@ -17,7 +17,8 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authenticationServiceProvider: AuthenticationServiceProvider,
-    public storage: Storage, public http : HttpClient) {
+    public storage: Storage, public http : HttpClient,
+    public toast: ToastController) {
 
   }
 
@@ -43,6 +44,7 @@ export class LoginPage {
       err => {
         console.log("error: ");
         console.log(err);
+        this.showToast("Failed to log in.");
       }
     );
 
@@ -67,4 +69,13 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
 
+  public showToast(data) {
+    let newToast = this.toast.create({
+      message: data,
+      duration: 1000,
+      position: 'middle'
+    });
+
+    newToast.present();
+  }
 }
