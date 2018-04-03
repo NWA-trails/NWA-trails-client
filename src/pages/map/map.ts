@@ -8,6 +8,7 @@ import { contactDetails } from './contactDetails';
 import { SMS } from '@ionic-native/sms';
 import { HTTP } from '@ionic-native/http';
 import { HttpClient } from '@angular/common/http';
+import * as  trailJSON  from "../../assets/GeoJSON/trailJSON.json";
 
 
 
@@ -53,6 +54,8 @@ export class MapPage {
       alert("Cannot find location.")
       alert(e.message);
     });
+
+    this.addFeatureToMap(trailJSON);
 
 //
     //  alert(this.file.applicationDirectory);
