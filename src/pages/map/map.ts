@@ -21,6 +21,8 @@ export class MapPage {
   isEmergencyCallEnabled: boolean = false;
   buttonColor: string = 'default';
   contact: contactDetails;
+  colorIterator: number = 0;
+  mapIsLoaded: boolean = false;
 
 
 
@@ -35,51 +37,69 @@ export class MapPage {
   }
 
   loadLeafletMap(){
-    this.map = leaflet.map('mapId');
-    if(this.map == undefined) alert("map is undefined");
-    leaflet.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'edupala.com © ionic LeafLet'
-    }).addTo(this.map);
-
-    this.map.locate({
-      setView:true,
-      maxZoom:15
-    }).on("locationfound", e => {
-      console.log("locations found");
-      var radius = e.accuracy / 3;
+    if(!this.mapIsLoaded) {
+      this.map = leaflet.map('mapId');
       if(this.map == undefined) alert("map is undefined");
-      //leaflet.marker(e.latlng).addTo(this.map).bindPopup("You are within " + radius + " meters from this point").openPopup();
-      leaflet.circle(e.latlng, radius).addTo(this.map);
-    }).on('locationerror', e => {
-      alert("Cannot find location.")
-      alert(e.message);
-    });
+      leaflet.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'edupala.com © ionic LeafLet'
+      }).addTo(this.map);
 
-    this.addFeatureToMap(trailJSON);
+      this.map.locate({
+        setView:true,
+        maxZoom:15
+      }).on("locationfound", e => {
+        console.log("locations found");
+        var radius = e.accuracy / 3;
+        if(this.map == undefined) alert("map is undefined");
+        //leaflet.marker(e.latlng).addTo(this.map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+        leaflet.circle(e.latlng, radius).addTo(this.map);
+      }).on('locationerror', e => {
+        alert("Cannot find location.")
+        alert(e.message);
+      });
 
-//
-    //  alert(this.file.applicationDirectory);
-    // this.file.readAsText(this.file.applicationDirectory +'www/assets/GeoJSON','trailJSON.geojson')
-    // .then((geoData) => {
-    //     alert("read successfully");
-    //     alert(geoData.length);
-    //    // var trailFeaturesCollection = JSON.parse(geoData);
-    //    // this.addFeatureToMap(trailFeaturesCollection);
-    //
-    //
-    //
-    // }).catch(err => {
-    //   alert("geoData issue");
-    //   alert(err);
-    //
-    // });
+      this.addFeatureToMap(trailJSON);
 
+      this.mapIsLoaded = true;
+    }
   }
 
-  addFeatureToMap(feature)
+  addFeatureToMap(geoJSON)
   {
-    alert("adding to map");
-     leaflet.geoJSON(feature).addTo(this.map);
+    var _this = this;
+    var trailFeatures = leaflet.geoJSON(geoJSON, {
+      onEachFeature: this.addPopUpToFeature,
+      style: function (feature) {
+        _this.colorIterator += 1;
+        switch (_this.colorIterator % 6) {
+            case 0: return {color: "#202EF2", weight: 7};
+            case 1: return {color: "#46c3b6", weight: 7};
+            case 2: return {color: "#092e34", weight: 7};
+            case 3: return {color: "#737CF6", weight: 7};
+            case 4: return {color: "#949494", weight: 7};
+            case 5: return {color: "#51d5e8", weight: 7};
+        }
+      }
+    }).addTo(this.map);
+  }
+
+  addPopUpToFeature(feature, layer) {
+    if(feature.properties.mile_marker == undefined) {
+      if(feature.properties.first_surftype) {
+        layer.bindPopup('<h1>'+feature.properties.first_prim_name+'</h1>'+
+        '<p>Segment: '+feature.properties.first_seg_name+'</p>'+
+        '<p>Surface Type: '+feature.properties.first_surftype+'</p>'+
+        '<p>Length: '+feature.properties.first_trlmiles.toFixed(2)+' mi</p>');
+      } else {
+        layer.bindPopup('<h1>'+feature.properties.first_prim_name+'</h1>'+
+        '<p>Segment: '+feature.properties.first_seg_name+'</p>'+
+        '<p>Length: '+feature.properties.first_trlmiles.toFixed(2)+' mi</p>');
+      }
+    } else {
+      layer.bindPopup('<h1>'+feature.properties.mile_marker+'</h1>'+
+      '<p>Latitude: '+feature.properties.gps_y+'</p>'+
+      '<p>Longitude: '+feature.properties.gps_x+'</p>');
+    }
   }
 
   onTouch() {
@@ -129,7 +149,7 @@ export class MapPage {
         text: 'Disagree',
         handler: () => {
           let toast = this.toastCtrl.create({
-            message: 'Emergency Call Cancled.',
+            message: 'Emergency Call Canceled.',
             duration: 2000,
             position: 'top'
           });
