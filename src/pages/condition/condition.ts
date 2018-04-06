@@ -14,8 +14,26 @@ export class ConditionPage {
   public picture: string;
   public pictureData: string;
   public checkPic: string;
+  public reportDescription: string;
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public camera: Camera, public http: HttpClient, public geolocation : Geolocation) {
 
+    this.forDavid();
+
+  }
+
+  forDavid()
+  {
+    this.http.get('https://nwa-trails-webservice.herokuapp.com/trailcondition/getAll').subscribe( res => {
+      alert("trying to display complete report Michael put on db for David");
+      alert(JSON.stringify(res[0]));
+      var s_image = this.byteArrayToString(res[0].image)
+      this.picture = "data:image/jpeg;base64," + s_image;
+      this.reportDescription = res[0].description;
+
+   }, (err) => {
+     alert("error here");
+     alert(JSON.stringify(err));
+   });
   }
 
   takePicture() {
@@ -45,39 +63,26 @@ export class ConditionPage {
   submit()
   {
      this.geolocation.getCurrentPosition().then((position) => {
-      var repot: conditionDetails = {
+      var report: conditionDetails = {
         //waiting to get user storage sorted out
-        username:"test",
+        username:"BLAZINGDAMON",
         //still have to add in the html
-        description:"there is a condition to report and this is a test:)",
+        description:this.reportDescription,
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-        image: this.pictureData
+        image: this.stringToByteArray(this.pictureData)
       };
-      alert(JSON.stringify(repot));
+          this.http.post('https://nwa-trails-webservice.herokuapp.com/trailcondition/add' , report).subscribe( res => {
+            alert(res);
+
+         });
     }, (err) => {
       alert("getting location error");
       alert(err);
     });
 
+    alert("so its all in the table and everything...i just dont know how to clear this page without breaking it....Sincerely, Michael");
 
-
-
-//     alert("Thank you for submitting a conditions report!");
-//
-// //re-run the view load function if the page has one declared
-//     //this.navCtrl.push(ConditionPage);
-//     this.http.post('https://nwa-trails-webservice.herokuapp.com/user/image' , this.pictureData).subscribe( res => {
-//
-//     this.checkPic = "data:image/jpeg;base64," + res["image"];
-//     if(this.checkPic != this.picture)
-//       alert("images not the same");
-//      else alert("all good with the pics");
-//
-//    }, (err) => {
-//      alert("error with post");
-//      alert(JSON.stringify(err));
-//    });
   }
 
   stringToByteArray(s)
@@ -89,4 +94,14 @@ export class ConditionPage {
     }
     return data;
   }
+
+  byteArrayToString(array)
+   {
+  	var result = "";
+  	for(var i = 0; i < array.length; ++i){
+  		result+= (String.fromCharCode(array[i]));
+  	}
+  	return result;
+  }
+
 }

@@ -31,7 +31,7 @@
   <button ion-button full class="pictureButton" (click)="takePicture()">Take a Picture</button>
   <ion-item>
     <ion-label color="primary">Description:</ion-label>
-    <ion-textarea placeholder="What is the condition that you're reporting?"></ion-textarea>
+    <ion-textarea placeholder="What is the condition that you're reporting?" [(ngModel)]="reportDescription"></ion-textarea>
   </ion-item>
   <button ion-button full class="pictureButton" (click)="submit()">Submit</button>
 </ion-content>
