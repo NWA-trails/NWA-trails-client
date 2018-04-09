@@ -34,7 +34,6 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     ConditionPage,
     MapPage,
     EmergencyContactsPage,
-    LoginPage,
     RegisterPage,
     InitialPage
   ],
@@ -53,7 +52,6 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     ConditionPage,
     MapPage,
     EmergencyContactsPage,
-    LoginPage,
     RegisterPage,
     InitialPage
   ],

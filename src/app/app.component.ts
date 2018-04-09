@@ -9,7 +9,7 @@ import { InitialPage } from "../pages/initial/initial";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any;
+  rootPage: any = 'LoginPage';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private androidPermissions: AndroidPermissions) {
     platform.ready().then(() => {

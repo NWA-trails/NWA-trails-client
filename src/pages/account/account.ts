@@ -94,6 +94,7 @@ export class AccountPage {
       success => {
         console.log("Logged out");
         this.navCtrl.setRoot(LoginPage);
+        document.location.href = 'index.html';
       },
       err => {
         console.log("Failed to log out");
