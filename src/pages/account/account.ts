@@ -18,7 +18,7 @@ export class AccountPage {
   public base64Image: string;
 
   displayDetails: Details = {
-    "userName": "john123",
+    "userName": "john titor6",
     "personalName": "John Doe",
     "email": "test@gmail.com",
     "dateOfBirth": "01/01/1901",
@@ -46,20 +46,22 @@ export class AccountPage {
   }
 
   takePicture() {
-    const options: CameraOptions = {
-      quality: 100,
+    let options = {
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+      targetWidth: 500,
+      targetHeight: 500,
+      quality: 100,
+      allowEdit: true
+    };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.base64Image = 'data:image/jpg;base64,' + imageData;
+      this.base64Image = "data:image/jpeg;base64," + imageData;
 
       let cameraImageSelector = document.getElementById('camera-image');
       cameraImageSelector.setAttribute('src', this.base64Image);
-    }, (error) => {
-      console.log('unable to take picture');
+
+    }).catch( err => {
+      console.log(err);
     });
   }
 
