@@ -8,6 +8,7 @@ import { MapPage } from '../pages/map/map';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AccountPage } from '../pages/account/account';
 import { ConditionPage } from '../pages/condition/condition';
+import { PointsPage } from '../pages/points/points';
 import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-contacts";
 import { LoginPage } from "../pages/login/login";
 import { RegisterPage } from "../pages/register/register";
@@ -32,6 +33,7 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     TabsPage,
     AccountPage,
     ConditionPage,
+    PointsPage,
     MapPage,
     EmergencyContactsPage,
     RegisterPage,
@@ -50,6 +52,7 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     TabsPage,
     AccountPage,
     ConditionPage,
+    PointsPage,
     MapPage,
     EmergencyContactsPage,
     RegisterPage,
