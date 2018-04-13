@@ -4,13 +4,13 @@ import { Camera } from '@ionic-native/camera';
 import { AlertController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation';
-import { conditionDetails } from './conditionDetails'
+import { pointsDetails } from './pointsDetails'
 
 @Component({
-  selector: 'page-condition',
-  templateUrl: 'condition.html'
+  selector: 'page-points',
+  templateUrl: 'points.html'
 })
-export class ConditionPage {
+export class PointsPage {
   public picture: string;
   public pictureData: string;
   public checkPic: string;
@@ -54,8 +54,7 @@ export class ConditionPage {
   showAlert() {
     let alert = this.alertCtrl.create({
       title: 'Help',
-      subTitle: '<p> The purpose of this screen is to report any adverse trail conditions to trail managers as well as fellow app users. <br /> To submit a notice: <br /> 1. Take a picture of the problem. <br /> 2. Right a brief description describing the problem. <br /> 3. Press Submit!</p>',
-      buttons: ['OK']
+      subTitle: '<p> On this screen, you can suggest trail locations to add to the map page. Examples of locations to submit are stores, stops and landmarks. <br /> To submit a point of interest: <br /> 1. Take a picture. <br /> 2. Describe the point. <br /> 3. Press Submit! < br /> 4. If approved, the point will be added onto the map page. <br />', buttons: ['OK']
     });
     alert.present();
   }
@@ -63,7 +62,7 @@ export class ConditionPage {
   submit()
   {
      this.geolocation.getCurrentPosition().then((position) => {
-      var report: conditionDetails = {
+      var report: pointsDetails = {
         //waiting to get user storage sorted out
         username:"BLAZINGDAMON",
         //still have to add in the html
@@ -72,7 +71,7 @@ export class ConditionPage {
         lng: position.coords.longitude,
         image: this.stringToByteArray(this.pictureData)
       };
-          this.http.post('https://nwa-trails-webservice.herokuapp.com/trailcondition/add' , report).subscribe( res => {
+      this.http.post('https://nwa-trails-webservice.herokuapp.com/pointofinterest/add' , report).subscribe( res => {
             alert(res);
 
          });

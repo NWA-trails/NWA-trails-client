@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Report Trail Conditions
+      Submit Points of Interest
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -14,7 +14,7 @@
   <div style="width: 100%; text-align: center; position: relative;">
     <div style="display: inline-block; height: 50%; width: 50%;">
       <img [src]="picture" *ngIf="picture" />
-      <img src="assets/imgs/condition.png" *ngIf="!picture" />
+      <img src="assets/imgs/points.png" *ngIf="!picture" />
     </div>
     <div style="position: absolute; right: 14%; bottom: 0">
       <button ion-button round icon-only (click)="takePicture()">
@@ -24,7 +24,7 @@
   </div>
   <ion-item>
     <ion-label color="primary">Description:</ion-label>
-    <ion-textarea placeholder="What is the condition that you're reporting?" [(ngModel)]="reportDescription"></ion-textarea>
+    <ion-textarea placeholder="What is here?" [(ngModel)]="reportDescription"></ion-textarea>
   </ion-item>
   <button ion-button full class="pictureButton" (click)="submit()">Submit</button>
 </ion-content>
