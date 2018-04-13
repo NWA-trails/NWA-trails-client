@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { Storage, IonicStorageModule } from '@ionic/storage'
+import { IonicStorageModule } from '@ionic/storage'
 
 import { MapPage } from '../pages/map/map';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -26,15 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { LongPressModule } from 'ionic-long-press';
 import { SMS } from '@ionic-native/sms';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
-import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
-import { AuthProvider } from '../providers/auth/auth';
-
-export function jwtOptionsFactory(storage: Storage) {
-  return {
-    tokenGetter: () => storage.get('jwt_token'),
-    whitelistedDomains: ['localhost:8080']
-  }
-}
 
 @NgModule({
   declarations: [
@@ -46,18 +37,10 @@ export function jwtOptionsFactory(storage: Storage) {
     MapPage,
     EmergencyContactsPage,
     RegisterPage,
-    InitialPage,
-    LoginPage
+    InitialPage
   ],
   imports: [
     BrowserModule,
-    JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory,
-        deps: [Storage]
-      }
-    }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     LongPressModule,
@@ -73,8 +56,7 @@ export function jwtOptionsFactory(storage: Storage) {
     MapPage,
     EmergencyContactsPage,
     RegisterPage,
-    InitialPage,
-    LoginPage
+    InitialPage
   ],
   providers: [
     StatusBar,
@@ -87,8 +69,7 @@ export function jwtOptionsFactory(storage: Storage) {
     File,
     HTTP,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AuthenticationServiceProvider,
-    AuthProvider
+    AuthenticationServiceProvider
   ]
 })
 export class AppModule { }

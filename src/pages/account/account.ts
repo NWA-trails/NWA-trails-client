@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { EmergencyContactsPage } from "../emergency-contacts/emergency-contacts";
 import { Storage } from '@ionic/storage';
 import { LoginPage } from "../login/login";
-import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -37,7 +36,7 @@ export class AccountPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private camera: Camera, private http : HttpClient,
-              private storage: Storage, public authProvider: AuthProvider) {
+              private storage: Storage) {
 
   }
 
@@ -93,6 +92,16 @@ export class AccountPage {
   }
 
   logOut() {
-    this.authProvider.logout();
+    this.storage.remove('username').then(
+      success => {
+        console.log("Logged out");
+        this.navCtrl.setRoot(LoginPage);
+        document.location.href = 'index.html';
+      },
+      err => {
+        console.log("Failed to log out");
+        console.log(err);
+      }
+    );
   }
 }
