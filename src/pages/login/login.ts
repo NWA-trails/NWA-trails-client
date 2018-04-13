@@ -5,6 +5,9 @@ import { Storage } from '@ionic/storage';
 import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
 import { HttpClient } from '@angular/common/http';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { AuthProvider } from '../../providers/auth/auth';
+import { finalize } from 'rxjs/operators/finalize';
 
 @IonicPage()
 @Component({
@@ -13,12 +16,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginPage {
 
-  credentials = { username: '', password: ''};
+  credentials = { "username": '', "password": ''};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public authenticationServiceProvider: AuthenticationServiceProvider,
     public storage: Storage, public http : HttpClient,
-    public toast: ToastController) {
+    public toast: ToastController,
+    public loadingCtrl: LoadingController,
+    public authProvider: AuthProvider) {
 
   }
 
@@ -27,28 +31,22 @@ export class LoginPage {
   }
 
   public login(credentials) {
-    this.authenticationServiceProvider.login(this.credentials).subscribe(
-      response => {
-        console.log("response: ")
-        console.log(response);
-        this.storage.set('username',this.credentials.username).then(
-          success => {
-            this.setEmergencyContactsLocally(); //
-            this.navCtrl.setRoot(TabsPage);
-          },
-          error => {
-            console.log("Failed to save username \"" + this.credentials.username + "\" to storage");
-          }
-        );
-      },
-      err => {
-        console.log("error: ");
-        console.log(err);
-        this.showToast("Failed to log in.");
-      }
-    );
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Logging in ...'
+    });
 
+    loading.present();
 
+    console.log("Username: " + this.credentials.username + " and password is: " + this.credentials.password);
+
+    this.authProvider
+      .login(this.credentials)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe (
+        () => {},
+        err => console.log("Error when logging in: " + err.message)
+      );
   }
 
   setEmergencyContactsLocally() {

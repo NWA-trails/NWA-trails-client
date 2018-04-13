@@ -21,6 +21,7 @@
     "@angular/http": "5.0.3",
     "@angular/platform-browser": "5.0.3",
     "@angular/platform-browser-dynamic": "5.0.3",
+    "@auth0/angular-jwt": "^1.1.0",
     "@ionic-native/android-permissions": "^4.5.3",
     "@ionic-native/call-number": "^4.5.3",
     "@ionic-native/camera": "^4.5.3",
