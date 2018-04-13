@@ -38,16 +38,21 @@ export class ConditionPage {
 
   takePicture() {
 
-    this.camera.getPicture({
+    let options = {
       destinationType: this.camera.DestinationType.DATA_URL,
-      targetWidth: 1000,
-      targetHeight: 1000
-    }).then((imageData) => {
+      targetWidth: 500,
+      targetHeight: 500,
+      quality: 100,
+      allowEdit: true
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
       this.picture = "data:image/jpeg;base64," + imageData;
-      this.pictureData = imageData;
-    }, (err) => {
-      alert("prob");
-      alert(err);
+
+      let cameraImageSelector = document.getElementById('camera-image');
+      cameraImageSelector.setAttribute('src', this.picture);
+
+    }).catch( err => {
       console.log(err);
     });
   }
