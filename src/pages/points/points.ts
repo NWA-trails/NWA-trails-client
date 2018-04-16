@@ -4,7 +4,8 @@ import { Camera } from '@ionic-native/camera';
 import { AlertController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation';
-import { pointsDetails } from './pointsDetails'
+import { pointsDetails } from './pointsDetails';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-points',
@@ -15,26 +16,18 @@ export class PointsPage {
   public pictureData: string;
   public checkPic: string;
   public reportDescription: string;
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public camera: Camera, public http: HttpClient, public geolocation : Geolocation) {
+  public trail: string;
+  public username:string;
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public camera: Camera, public http: HttpClient, public geolocation : Geolocation, public storage: Storage) {
 
-    //this.forDavid();
-
+    this.storage.get('closestTrail').then((trail) => {
+      this.trail = trail;
+    });
+    this.storage.get('username').then((username) => {
+      this.username = username;
+    });
   }
 
-  forDavid()
-  {
-    /*this.http.get('https://nwa-trails-webservice.herokuapp.com/trailcondition/getAll').subscribe( res => {
-      alert("trying to display complete report Michael put on db for David");
-      alert(JSON.stringify(res[0]));
-      var s_image = this.byteArrayToString(res[0].image)
-      this.picture = "data:image/jpeg;base64," + s_image;
-      this.reportDescription = res[0].description;
-
-   }, (err) => {
-     alert("error here");
-     alert(JSON.stringify(err));
-   });*/
-  }
 
   takePicture() {
 
@@ -47,6 +40,7 @@ export class PointsPage {
     };
 
     this.camera.getPicture(options).then((imageData) => {
+      this.pictureData = imageData;
       this.picture = "data:image/jpeg;base64," + imageData;
 
       let cameraImageSelector = document.getElementById('camera-image');
@@ -69,13 +63,15 @@ export class PointsPage {
      this.geolocation.getCurrentPosition().then((position) => {
       var report: pointsDetails = {
         //waiting to get user storage sorted out
-        username:"BLAZINGDAMON",
+        username:this.username,
         //still have to add in the html
         description:this.reportDescription,
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-        image: this.stringToByteArray(this.pictureData)
+        image: this.stringToByteArray(this.pictureData),
+        trail: this.trail
       };
+      alert("posting");
       this.http.post('https://nwa-trails-webservice.herokuapp.com/pointofinterest/add' , report).subscribe( res => {
             alert(res);
 
@@ -85,7 +81,6 @@ export class PointsPage {
       alert(err);
     });
 
-    alert("so its all in the table and everything...i just dont know how to clear this page without breaking it....Sincerely, Michael");
 
   }
 

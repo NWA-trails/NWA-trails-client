@@ -9,6 +9,7 @@ import { SMS } from '@ionic-native/sms';
 import { HTTP } from '@ionic-native/http';
 import { HttpClient } from '@angular/common/http';
 import * as  trailJSON  from "../../assets/GeoJSON/trailJSON.json";
+import * as leafletKnn  from "leaflet-knn";
 
 
 
@@ -23,6 +24,8 @@ export class MapPage {
   contact: contactDetails;
   colorIterator: number = 0;
   mapIsLoaded: boolean = false;
+  trailFeatures = [];
+
 
 
 
@@ -34,6 +37,8 @@ export class MapPage {
     if(this.map == undefined) {
       this.loadLeafletMap();
     }
+   // setInterval(this.locate, 3000);
+
   }
 
   loadLeafletMap(){
@@ -44,30 +49,41 @@ export class MapPage {
         attribution: 'edupala.com © ionic LeafLet'
       }).addTo(this.map);
 
-      this.map.locate({
-        setView:true,
-        maxZoom:15
-      }).on("locationfound", e => {
-        console.log("locations found");
-        var radius = e.accuracy / 3;
-        if(this.map == undefined) alert("map is undefined");
-        //leaflet.marker(e.latlng).addTo(this.map).bindPopup("You are within " + radius + " meters from this point").openPopup();
-        leaflet.circle(e.latlng, radius).addTo(this.map);
-      }).on('locationerror', e => {
-        alert("Cannot find location.")
-        alert(e.message);
-      });
 
+      this.locate();
       this.addFeatureToMap(trailJSON);
+
 
       this.mapIsLoaded = true;
     }
   }
 
+  locate(){
+    var circle;
+
+    this.map.locate({
+      setView:true,
+      maxZoom:15,
+      watch: true
+    }).on("locationfound", e => {
+      console.log("locations found");
+      var radius = e.accuracy / 3;
+      if(this.map == undefined) alert("map is undefined");
+     this.nearBy(e.latlng);
+     if(!circle)
+        circle = leaflet.circle(e.latlng, radius).addTo(this.map);
+     else
+      circle.setLatLng(e.latlng);
+    }).on('locationerror', e => {
+      alert("Cannot find location.")
+      alert(e.message);
+    });
+  }
+
   addFeatureToMap(geoJSON)
   {
     var _this = this;
-    var trailFeatures = leaflet.geoJSON(geoJSON, {
+    _this.trailFeatures = leaflet.geoJSON(geoJSON, {
       onEachFeature: this.addPopUpToFeature,
       style: function (feature) {
         _this.colorIterator += 1;
@@ -101,6 +117,17 @@ export class MapPage {
       '<p>Longitude: '+feature.properties.gps_x+'</p>');
     }
   }
+
+  nearBy(latlng)
+  {
+
+   var index = leafletKnn(leaflet.geoJSON(trailJSON)).nearest(latlng, 1, 100);
+    //index.nearest(latlng, 1,10);
+    //show me something
+    console.log(index[0].layer.feature.properties.first_prim_name);
+    this.storage.set('closestTrail',index[0].layer.feature.properties.first_prim_name);
+    
+}
 
   onTouch() {
     this.buttonColor = 'danger';

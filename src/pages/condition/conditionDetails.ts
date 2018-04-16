@@ -4,4 +4,5 @@ export interface conditionDetails {
     description: string;
     lat: number;
     lng: number;
+    trail: string
 }

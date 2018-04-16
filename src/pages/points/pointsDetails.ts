@@ -4,4 +4,5 @@ export interface pointsDetails {
     description: string;
     lat: number;
     lng: number;
+    trail: string;
 }
