@@ -87,11 +87,15 @@ export class PointsPage {
   stringToByteArray(s)
   {
 
-    var data = [];
-    for (var i = 0; i < s.length; i++){
-      data.push(s.charCodeAt(i));
+    if(s)
+    {
+      var data = [];
+      for (var i = 0; i < s.length; i++){
+        data.push(s.charCodeAt(i));
+      }
+      return data;
     }
-    return data;
+    else return null;
   }
 
   byteArrayToString(array)
