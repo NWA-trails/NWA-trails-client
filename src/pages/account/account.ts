@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Details } from './details';
+import { AccountDetails } from './details';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { HttpClient } from '@angular/common/http';
 import { EmergencyContactsPage } from "../emergency-contacts/emergency-contacts";
@@ -17,7 +17,7 @@ export class AccountPage {
   isEditing: boolean = false;
   public base64Image: string;
 
-  displayDetails: Details = {
+  displayDetails: AccountDetails = {
     "userName": "john titor6",
     "personalName": "John Doe",
     "email": "test@gmail.com",
@@ -37,6 +37,7 @@ export class AccountPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private camera: Camera, private http : HttpClient,
               private storage: Storage) {
+                this.storage.set('userDetails', this.displayDetails);
 
   }
 

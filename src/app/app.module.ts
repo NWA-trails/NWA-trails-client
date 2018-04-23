@@ -13,6 +13,7 @@ import { EmergencyContactsPage } from "../pages/emergency-contacts/emergency-con
 import { LoginPage } from "../pages/login/login";
 import { RegisterPage } from "../pages/register/register";
 import { InitialPage } from "../pages/initial/initial";
+import { EmergencyInformationDisplayPage } from "../pages/emergency-information-display/emergency-information-display";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -37,7 +38,8 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     MapPage,
     EmergencyContactsPage,
     RegisterPage,
-    InitialPage
+    InitialPage,
+    EmergencyInformationDisplayPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     MapPage,
     EmergencyContactsPage,
     RegisterPage,
-    InitialPage
+    InitialPage,
+    EmergencyInformationDisplayPage,
   ],
   providers: [
     StatusBar,

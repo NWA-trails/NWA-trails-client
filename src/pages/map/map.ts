@@ -8,6 +8,7 @@ import { contactDetails } from './contactDetails';
 import { SMS } from '@ionic-native/sms';
 import { HTTP } from '@ionic-native/http';
 import { HttpClient } from '@angular/common/http';
+import { EmergencyInformationDisplayPage } from '../emergency-information-display/emergency-information-display';
 import * as  trailJSON  from "../../assets/GeoJSON/trailJSON.json";
 import * as leafletKnn  from "leaflet-knn";
 
@@ -24,6 +25,8 @@ export class MapPage {
   contact: contactDetails;
   colorIterator: number = 0;
   mapIsLoaded: boolean = false;
+  lastKnownLocation: leaflet.Map.latlng;
+  closestTrailToLastKnownLocation: string;
   trailFeatures = [];
 
 
@@ -64,9 +67,12 @@ export class MapPage {
     this.map.locate({
       setView:true,
       maxZoom:15,
-      watch: true
+      watch: false,
+
     }).on("locationfound", e => {
-      console.log("locations found");
+      console.log("locations found: " + e.latlng);
+
+      this.lastKnownLocation = e.latlng;
       var radius = e.accuracy / 3;
       if(this.map == undefined) alert("map is undefined");
      this.nearBy(e.latlng);
@@ -75,8 +81,7 @@ export class MapPage {
      else
       circle.setLatLng(e.latlng);
     }).on('locationerror', e => {
-      alert("Cannot find location.")
-      alert(e.message);
+      alert("Cannot find location: " + e.message);
     });
   }
 
@@ -121,11 +126,18 @@ export class MapPage {
   nearBy(latlng)
   {
 
-   var index = leafletKnn(leaflet.geoJSON(trailJSON)).nearest(latlng, 1, 100);
+   var index = leafletKnn(leaflet.geoJSON(trailJSON)).nearest(latlng, 1, 1000);
     //index.nearest(latlng, 1,10);
     //show me something
-    console.log(index[0].layer.feature.properties.first_prim_name);
-    this.storage.set('closestTrail',index[0].layer.feature.properties.first_prim_name);
+    console.log("Index is: " + index);
+    if (index !== undefined) {
+      console.log("Closest trail is: " + index[0].layer.feature.properties.first_prim_name);
+      this.storage.set('closestTrail',index[0].layer.feature.properties.first_prim_name);
+      this.closestTrailToLastKnownLocation = index[0].layer.feature.properties.first_prim_name;
+    } else {
+      console.log("Could not find a nearby trail :(");
+      this.storage.set('closestTrail', 'No closest Trail');
+    }
     
 }
 
@@ -169,7 +181,13 @@ export class MapPage {
         text: 'Agree',
         handler: () => {
           this.sendAlertToEmerContact();
-          this.emergencyCall();
+          //this.emergencyCall();
+          console.log("Latitude: " + this.lastKnownLocation.lat);
+          this.navCtrl.push(EmergencyInformationDisplayPage, {
+            latitude: this.lastKnownLocation.lat,                                             
+            longitude: this.lastKnownLocation.lng,                                  
+            nearestTrail: this.closestTrailToLastKnownLocation
+          });
         }
       },
       {
@@ -192,7 +210,15 @@ export class MapPage {
  }
 
  sendAlertToEmerContact() {
+  
+  this.locate();
+  var message = 'John Doe has initiated a call to 9-1-1. Their last known location is the coordinates Latitude: ' + this.lastKnownLocation.lat + ' Longitiude: ' + this.lastKnownLocation.lng + ' The nearest location is: ' + this.closestTrailToLastKnownLocation;
+  
+  
+  
+  console.log(message);
   this.storage.get('contacts').then((val) => {
+    console.log("Emergency Contact is: " + val);
     if (val != null) {
       this.contact = val[0];
 
@@ -203,7 +229,12 @@ export class MapPage {
         }
       };
 
-      this.sms.send(this.contact.primaryPhone, 'John Doe has initiated a call to 9-1-1. Here are some details...', options)
+      this.locate();
+
+      var message = 'John Doe has initiated a call to 9-1-1. Their last known location is the coordinates (Latitude: ' + this.lastKnownLocation.lat + ' Longitiude: ' + this.lastKnownLocation.lng;
+      console.log(message);
+    
+      this.sms.send(this.contact.primaryPhone, message, options)
         .then(() => {alert("sent")});
     }
   });
