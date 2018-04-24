@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
 import { HttpClient } from '@angular/common/http';
+import { AccountDetails } from "../account/details";
 
 @IonicPage()
 @Component({
@@ -14,6 +15,18 @@ import { HttpClient } from '@angular/common/http';
 export class LoginPage {
 
   credentials = { username: '', password: ''};
+
+  userDetails: AccountDetails = {
+      username: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      dateofbirth: "",
+      height: "",
+      weight: "",
+      id: 0,
+      role: ""
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authenticationServiceProvider: AuthenticationServiceProvider,
@@ -33,7 +46,8 @@ export class LoginPage {
         console.log(response);
         this.storage.set('username',this.credentials.username).then(
           success => {
-            this.setEmergencyContactsLocally(); //
+            this.setUserInformationLocally();
+            this.setEmergencyContactsLocally();
             this.navCtrl.setRoot(TabsPage);
           },
           error => {
@@ -49,6 +63,36 @@ export class LoginPage {
     );
 
 
+  }
+
+  setUserInformationLocally() {
+    var username = this.storage.get('username').then((username) => {
+      this.http.get('https://nwa-trails-webservice.herokuapp.com/user/getUserInformation/' + username).subscribe( res => {
+        console.log("User information received: ", res);
+        for (var property in res) {
+          if (res[property] != "") {
+            console.log("Property: " + property + " value: " + res[property]);
+            this.userDetails[property] = res[property];
+          }
+        }
+
+        this.http.get('https://nwa-trails-webservice.herokuapp.com/accountInformation/getAccountInformation/' + username).subscribe( res => {
+          console.log("User Personal information received: ", res);
+          if (res) {
+            for (var property in res) {
+              if (res[property] != "") {
+                this.userDetails[property] = res[property];
+              }
+            }
+          }
+        });
+      });
+    });
+
+    username.then((username) => {
+      console.log("User details at login are: ", this.userDetails);
+      this.storage.set('userDetails', this.userDetails);
+    });
   }
 
   setEmergencyContactsLocally() {

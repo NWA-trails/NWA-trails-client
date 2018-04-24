@@ -19,12 +19,15 @@ export class EmergencyInformationDisplayPage {
 
   emergencyInformation: emergencyDetails = {
     userDetails: {
-      userName: "",
-      personalName: "",
+      username: "",
+      first_name: "",
+      last_name: "",
       email: "",
-      dateOfBirth: "",
+      dateofbirth: "",
       height: "",
       weight: "",
+      id: 0,
+      role: ""
     },
     latitude: "",
     longitude: "",
