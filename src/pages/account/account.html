@@ -31,15 +31,15 @@
         <ion-list inset no-lines>
           <ion-item>
             <div>
-              <p><span class="displayFormTitle">Username: </span> <span class="displayFormDetails">{{displayDetails.userName}}</span></p>
+              <p><span class="displayFormTitle">Username: </span> <span class="displayFormDetails">{{displayDetails.username}}</span></p>
             </div>
           </ion-item>
+          <ion-item>
+              <div>
+                <p><span class="displayFormTitle">Name: </span> <span class="displayFormDetails">{{displayDetails.first_name}} {{displayDetails.last_name}}</span></p>
+              </div>
+          </ion-item>
           <div *ngIf="!isEditing">
-            <ion-item>
-                <div>
-                  <p><span class="displayFormTitle">Name: </span> <span class="displayFormDetails">{{displayDetails.first_name}}</span></p>
-                </div>
-            </ion-item>
             <ion-item>
                 <div>
                   <p><span class="displayFormTitle">Email: </span> <span class="displayFormDetails">{{displayDetails.email}}</span></p>
@@ -47,17 +47,17 @@
             </ion-item>
             <ion-item>
                 <div>
-                  <p><span class="displayFormTitle">Date of Birth: </span> <span class="displayFormDetails">{{displayDetails.dateOfBirth}}</span></p>
+                  <p><span class="displayFormTitle">Date of Birth: </span> <span class="displayFormDetails">{{displayDetails.dateofbirth}}</span></p>
                 </div>
             </ion-item>
             <ion-item>
                 <div>
-                  <p><span class="displayFormTitle">Height: </span> <span class="displayFormDetails">{{displayDetails.height}}</span></p>
+                  <p><span class="displayFormTitle">Height: </span> <span class="displayFormDetails">{{displayDetails.weight}}</span></p>
                 </div>
             </ion-item>
             <ion-item>
                 <div>
-                  <p><span class="displayFormTitle">Weight: </span> <span class="displayFormDetails">{{displayDetails.weight}}</span></p>
+                  <p><span class="displayFormTitle">Weight: </span> <span class="displayFormDetails">{{displayDetails.height}}</span></p>
                 </div>
             </ion-item>
             <div *ngIf="!isEditing" style = "padding-top: 3%;">
@@ -74,28 +74,24 @@
           <div *ngIf="isEditing">
             <form (ngSubmit)="saveDetailsChanges()">
               <ion-item>
-                <ion-label text-left>Name: </ion-label>
-                <ion-input text-right type="text" placeholder={{displayDetails.personalName}} [(ngModel)]="formResult.personalName" name="personalName"></ion-input>
-              </ion-item>
-              <ion-item>
                 <ion-label text-left>Email: </ion-label>
                 <ion-input text-right type="text" placeholder={{displayDetails.email}} [(ngModel)]="formResult.email" name="email"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label text-left>Date of Birth: </ion-label>
-                <ion-input text-right type="text" placeholder={{displayDetails.dateOfBirth}} [(ngModel)]="formResult.dateOfBirth" name="dateOfBirth"></ion-input>
+                <ion-input text-right type="text" placeholder={{displayDetails.dateofbirth}} [(ngModel)]="formResult.dateOfBirth" name="dateOfBirth"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label text-left>Height: </ion-label>
-                <ion-input text-right type="text" placeholder={{displayDetails.height}} [(ngModel)]="formResult.height" name="height"></ion-input>
+                <ion-input text-right type="text" placeholder={{displayDetails.weight}} [(ngModel)]="formResult.height" name="height"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label text-left>Weight: </ion-label>
-                <ion-input text-right type="text" placeholder={{displayDetails.weight}} [(ngModel)]="formResult.weight" name="weight"></ion-input>
+                <ion-input text-right type="text" placeholder={{displayDetails.height}} [(ngModel)]="formResult.weight" name="weight"></ion-input>
               </ion-item>
               <div class="editButtons">
                 <div style="width: 50%; float:left; padding:2%;">
-                  <button ion-button block type="submit">
+                  <button ion-button block type="submit" (click)='saveDetailsChanges()'>
                     SAVE
                   </button>
                 </div>

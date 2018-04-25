@@ -18,14 +18,13 @@ export class AccountPage {
   public base64Image: string;
 
   displayDetails: AccountDetails = {
-    username: "fd",
-    first_name: "df",
-    last_name: "fd",
-    email: "fd",
-    dateofbirth: "fd",
-    height: "fd",
-    weight: "df",
-    id: 0,
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    dateofbirth: "",
+    height: "",
+    weight: "",
     role: ""
   }
 
@@ -41,8 +40,16 @@ export class AccountPage {
               private camera: Camera, private http : HttpClient,
               private storage: Storage) {
                 this.storage.get('userDetails').then((details) => {
-                  console.log("Details on account page: ", details);
+                  console.log("Details received on account page: ", details);
+                  for (var property in details) {
+                    if (details[property] != "") {
+                      this.displayDetails[property] = details[property];
+                    }
+                  }
+
+                  console.log("Actual Account Details: ", this.displayDetails);
                 });
+                
                 
   }
 
@@ -74,7 +81,7 @@ export class AccountPage {
   saveDetailsChanges() {
     this.isEditing = false;
 
-    /*
+    
     for (var property in this.formResult) {
       if (this.formResult[property] != "") {
         this.displayDetails[property] = this.formResult[property];
@@ -82,15 +89,13 @@ export class AccountPage {
     }
 
     var userPersonalInformation = {
-      username: this.displayDetails.userName,
-      dateofbirth: this.displayDetails.dateOfBirth,
+      username: this.displayDetails.username,
+      dateofbirth: this.displayDetails.dateofbirth,
       height: this.displayDetails.height,
       weight: this.displayDetails.weight
     }
 
     this.http.post('https://nwa-trails-webservice.herokuapp.com/accountInformation/updateAccountInformation', userPersonalInformation);
-
-    */
   }
 
   cancelDetailsChanges() {

@@ -26,7 +26,6 @@ export class EmergencyInformationDisplayPage {
       dateofbirth: "",
       height: "",
       weight: "",
-      id: 0,
       role: ""
     },
     latitude: "",

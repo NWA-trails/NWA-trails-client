@@ -6,6 +6,5 @@ export interface AccountDetails {
     dateofbirth: string;
     height: string;
     weight: string;
-    id: number;
     role: string;
 }

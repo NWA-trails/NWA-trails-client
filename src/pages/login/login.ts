@@ -24,7 +24,6 @@ export class LoginPage {
       dateofbirth: "",
       height: "",
       weight: "",
-      id: 0,
       role: ""
   }
 
@@ -67,31 +66,16 @@ export class LoginPage {
 
   setUserInformationLocally() {
     var username = this.storage.get('username').then((username) => {
-      this.http.get('https://nwa-trails-webservice.herokuapp.com/user/getUserInformation/' + username).subscribe( res => {
-        console.log("User information received: ", res);
+      this.http.get('https://nwa-trails-webservice.herokuapp.com/user/getUserDetails/' + username).subscribe( (res) => {
+        console.log("User Details received are: ", res);
         for (var property in res) {
           if (res[property] != "") {
-            console.log("Property: " + property + " value: " + res[property]);
             this.userDetails[property] = res[property];
           }
         }
 
-        this.http.get('https://nwa-trails-webservice.herokuapp.com/accountInformation/getAccountInformation/' + username).subscribe( res => {
-          console.log("User Personal information received: ", res);
-          if (res) {
-            for (var property in res) {
-              if (res[property] != "") {
-                this.userDetails[property] = res[property];
-              }
-            }
-          }
-        });
+        this.storage.set('userDetails', res);
       });
-    });
-
-    username.then((username) => {
-      console.log("User details at login are: ", this.userDetails);
-      this.storage.set('userDetails', this.userDetails);
     });
   }
 
