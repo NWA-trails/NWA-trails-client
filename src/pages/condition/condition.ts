@@ -34,10 +34,9 @@ export class ConditionPage {
 
     let options = {
       destinationType: this.camera.DestinationType.DATA_URL,
-      targetWidth: 400,
-      targetHeight: 400,
-      quality: 50,
-      saveToPhotoAlbum: true,
+      targetWidth: 500,
+      targetHeight: 500,
+      quality: 100,
       allowEdit: true
     };
 
@@ -84,6 +83,7 @@ export class ConditionPage {
       alert("getting location error");
       alert(err);
     });
+
 
   }
 
