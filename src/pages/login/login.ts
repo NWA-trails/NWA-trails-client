@@ -100,8 +100,8 @@ export class LoginPage {
   public showToast(data) {
     let newToast = this.toast.create({
       message: data,
-      duration: 1000,
-      position: 'middle'
+      duration: 500,
+      position: 'bottom'
     });
 
     newToast.present();
