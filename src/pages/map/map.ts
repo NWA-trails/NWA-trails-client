@@ -157,12 +157,13 @@ export class MapPage {
   }
 
   emergencyCall() {
-    var phoneNumber = "479-387-7620";
-    console.log("emergency call");
-    this.callNumber.callNumber(phoneNumber, true)
-      .then(() => console.log('Launched dialer: '+phoneNumber))
-      .catch(() => console.log('Error launching dialer'));
+    this.storage.get('emergencyContacts').then((res) => {
+      var phoneNumber = res.primaryphone;
 
+      this.callNumber.callNumber(phoneNumber, true)
+      .then(() => console.log('Launched dialer: ' + phoneNumber))
+      .catch(() => console.log('Error launching dialer'));
+    });
  }
 
  verifyEmergencyCall() {
