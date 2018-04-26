@@ -77,15 +77,15 @@ export class PointsPage {
         trail: closestTrail
       };
       this.http.post('https://nwa-trails-webservice.herokuapp.com/pointofinterest/add', report).subscribe(res => {
-        alert(res);
+        // alert(res);
 
       });
 
       this.navCtrl.setRoot(PointsPage);
 
     }, (err) => {
-      alert("getting location error");
-      alert(err);
+      // alert("getting location error");
+      // alert(err);
     })
     alert("Thank you for submitting a point of interest!");
   }

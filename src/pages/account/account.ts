@@ -56,14 +56,16 @@ export class AccountPage {
                 });
 
                 this.storage.get('profilePicture').then((picture) => {
-                  if (picture.image != "") {
-                    this.base64Image = picture.image;
-                    let cameraImageSelector = document.getElementById('account-image');
-                    cameraImageSelector.setAttribute('src', this.base64Image);
+                  if (picture) {
+                    if (picture.image != "") {
+                      this.base64Image = picture.image;
+                      let cameraImageSelector = document.getElementById('account-image');
+                      cameraImageSelector.setAttribute('src', this.base64Image);
+                    }
                   }
 
                   console.log("Profile picture is: ", picture);
-                });             
+                });
   }
 
 
@@ -115,7 +117,7 @@ export class AccountPage {
     }
 
     this.http.post('https://nwa-trails-webservice.herokuapp.com/accountInformation/updateAccountInformation', userPersonalInformation);
-    
+
   }
 
   cancelDetailsChanges() {

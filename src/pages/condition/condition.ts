@@ -77,13 +77,13 @@ export class ConditionPage {
         trail: this.trail
       };
       this.http.post('https://nwa-trails-webservice.herokuapp.com/trailcondition/add', report).subscribe(res => {
-        alert(res);
+        // alert(res);
 
       });
       this.navCtrl.setRoot(ConditionPage);
     }, (err) => {
-      alert("getting location error");
-      alert(err);
+      // alert("getting location error");
+      // alert(err);
     });
     alert("Thank you for submitting a trail condition!");
 

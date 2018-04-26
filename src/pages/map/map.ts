@@ -47,7 +47,7 @@ export class MapPage {
   loadLeafletMap(){
     if(!this.mapIsLoaded) {
       this.map = leaflet.map('mapId');
-      if(this.map == undefined) alert("map is undefined");
+      if(this.map == undefined) alert("There is an error with the map.");
       leaflet.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'edupala.com © ionic LeafLet'
       }).addTo(this.map);
@@ -74,7 +74,7 @@ export class MapPage {
 
       this.lastKnownLocation = e.latlng;
       var radius = 25;
-      if(this.map == undefined) alert("map is undefined");
+      if(this.map == undefined) alert("There is an error with the map.");
      if(!circle)
         circle = leaflet.circle(e.latlng, radius).addTo(this.map);
      else
@@ -181,14 +181,14 @@ export class MapPage {
 
           if (this.lastKnownLocation != undefined && this.closestTrailToLastKnownLocation != undefined) {
             this.navCtrl.push(EmergencyInformationDisplayPage, {
-              latitude: this.lastKnownLocation.lat,                                             
-              longitude: this.lastKnownLocation.lng,                                  
+              latitude: this.lastKnownLocation.lat,
+              longitude: this.lastKnownLocation.lng,
               nearestTrail: this.closestTrailToLastKnownLocation
             });
           } else {
             this.navCtrl.push(EmergencyInformationDisplayPage, {
-              latitude: "Unknown",                                             
-              longitude: "Unknown",                                  
+              latitude: "Unknown",
+              longitude: "Unknown",
               nearestTrail: "Unknown"
             });
           }
