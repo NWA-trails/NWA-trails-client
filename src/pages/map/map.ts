@@ -158,13 +158,11 @@ export class MapPage {
   }
 
   emergencyCall() {
-    this.storage.get('emergencyContacts').then((res) => {
-      var phoneNumber = res.primaryphone;
-
-      this.callNumber.callNumber(phoneNumber, true)
-      .then(() => console.log('Launched dialer: ' + phoneNumber))
-      .catch(() => console.log('Error launching dialer'));
-    });
+    var phoneNumber = "4699551980";
+    this.callNumber.callNumber(phoneNumber, true)
+    .then(() => console.log('Launched dialer: ' + phoneNumber))
+    .catch(() => console.log('Error launching dialer'));
+    
  }
 
  verifyEmergencyCall() {

@@ -30,9 +30,6 @@ export class EmergencyContactsPage {
     });
   }
 
-
-
-
   onCall(primaryPhone, secondaryPhone) {
     let alert = this.alertCtrl.create();
     alert.setTitle('Choose Number to call');
@@ -64,8 +61,6 @@ export class EmergencyContactsPage {
   }
 
   initCall(phoneNumber) {
-    phoneNumber = "4793877620";
-
     this.callNumber.callNumber(phoneNumber, true)
       .then(() => console.log('Launched dialer: '+phoneNumber))
       .catch(() => console.log('Error launching dialer'));
