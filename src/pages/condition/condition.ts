@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { conditionDetails } from './conditionDetails';
 import { Storage } from '@ionic/storage';
+import * as leafletKnn  from "leaflet-knn";
+import * as  trailJSON  from "../../assets/GeoJSON/trailJSON.json";
+import leaflet from "leaflet";
 
 @Component({
   selector: 'page-condition',
@@ -62,7 +65,7 @@ export class ConditionPage {
 
   submit() {
     this.geolocation.getCurrentPosition().then((position) => {
-
+       var closestTrail = this.nearBy(position.coords.latitude, position.coords.longitude);
       var report: conditionDetails = {
         //waiting to get user storage sorted out
         username: this.username,
@@ -73,7 +76,6 @@ export class ConditionPage {
         image: this.stringToByteArray(this.pictureData),
         trail: this.trail
       };
-      alert("posting");
       this.http.post('https://nwa-trails-webservice.herokuapp.com/trailcondition/add', report).subscribe(res => {
         alert(res);
 
@@ -83,7 +85,22 @@ export class ConditionPage {
       alert("getting location error");
       alert(err);
     });
+    alert("Thank you for submitting a trail condition!");
 
+  }
+
+  nearBy(lat, lng)
+  {
+    var lnglat = [lng, lat];
+    var index = leafletKnn(leaflet.geoJSON(trailJSON)).nearest(lnglat, 1, 1000);
+    //index.nearest(latlng, 1,10);
+    //show me something
+    if (index !== undefined) {
+      return index[0].layer.feature.properties.first_prim_name;
+    } else {
+      console.log("Could not find a nearby trail :(");
+      return 'No closest Trail';
+    }
 
   }
 
