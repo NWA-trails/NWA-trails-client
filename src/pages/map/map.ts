@@ -75,6 +75,7 @@ export class MapPage {
       this.lastKnownLocation = e.latlng;
       var radius = 25;
       if(this.map == undefined) alert("There is an error with the map.");
+      this.nearBy(e.latlng);
      if(!circle)
         circle = leaflet.circle(e.latlng, radius).addTo(this.map);
      else
