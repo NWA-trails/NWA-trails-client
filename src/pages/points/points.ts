@@ -56,7 +56,7 @@ export class PointsPage {
   showAlert() {
     let alert = this.alertCtrl.create({
       title: 'Help',
-      subTitle: '<p> On this screen, you can suggest trail locations to add to the map page. Examples of locations to submit are stores, stops and landmarks. <br /> To submit a point of interest: <br /> 1. Take a picture. <br /> 2. Describe the point. <br /> 3. Press Submit! < br /> 4. If approved, the point will be added onto the map page. <br />', buttons: ['OK']
+      subTitle: '<p> On this screen, you can suggest trail locations to add to the map page. Examples of locations to submit are stores, stops and landmarks. <br /> To submit a point of interest: <br /> 1. Take a picture. <br /> 2. Describe the point. <br /> 3. Press Submit! <br /> 4. If approved, the point will be added onto the map page. <br />', buttons: ['OK']
     });
     alert.present();
   }
