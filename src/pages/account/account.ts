@@ -54,8 +54,16 @@ export class AccountPage {
 
                   console.log("Actual Account Details: ", this.displayDetails);
                 });
-                
-                
+
+                this.storage.get('profilePicture').then((picture) => {
+                  if (picture.image != "") {
+                    this.base64Image = picture.image;
+                    let cameraImageSelector = document.getElementById('account-image');
+                    cameraImageSelector.setAttribute('src', this.base64Image);
+                  }
+
+                  console.log("Profile picture is: ", picture);
+                });             
   }
 
 

@@ -122,9 +122,7 @@ export class EmergencyContactsPage {
         {
           text: 'Save',
           handler: data => {
-            if (this.validatePhoneNumber(data.primaryPhone)) {
-
-            }
+            this.saveContact(data);
           }
         },
         {

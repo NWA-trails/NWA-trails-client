@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage'
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { MapPage } from '../pages/map/map';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -27,6 +28,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { LongPressModule } from 'ionic-long-press';
 import { SMS } from '@ionic-native/sms';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
+
+export class CustomHammerConfig extends HammerGestureConfig {
+  overrides =  {
+    'press': {time: 3000}
+  }
+}
 
 @NgModule({
   declarations: [
@@ -72,6 +79,7 @@ import { AuthenticationServiceProvider } from '../providers/authentication-servi
     File,
     HTTP,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
     AuthenticationServiceProvider
   ]
 })
