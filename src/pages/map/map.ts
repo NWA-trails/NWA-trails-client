@@ -80,7 +80,7 @@ export class MapPage {
      else
       circle.setLatLng(e.latlng);
     }).on('locationerror', e => {
-      alert("Cannot find location: " + e.message);
+      console.log("Cannot find location: " + e.message);
     });
   }
 
@@ -135,20 +135,23 @@ export class MapPage {
 }
 
   onTouch() {
+    console.log("In on touch");
     this.buttonColor = 'danger';
   }
 
   initEmergencyCall() {
+    console.log("In on pressing");
     this.buttonColor = 'secondary';
     this.isEmergencyCallEnabled = true;
   }
 
   onRelease() {
+    console.log("In on release");
     this.buttonColor = 'default';
 
-    if (this.isEmergencyCallEnabled) {
+    //if (this.isEmergencyCallEnabled) {
       this.verifyEmergencyCall();
-    }
+    //}
 
     this.isEmergencyCallEnabled = false;
   }
@@ -174,13 +177,22 @@ export class MapPage {
         text: 'Agree',
         handler: () => {
           this.sendAlertToEmerContact();
-          //this.emergencyCall();
-          console.log("Latitude: " + this.lastKnownLocation.lat);
-          this.navCtrl.push(EmergencyInformationDisplayPage, {
-            latitude: this.lastKnownLocation.lat,
-            longitude: this.lastKnownLocation.lng,
-            nearestTrail: this.closestTrailToLastKnownLocation
-          });
+          this.emergencyCall();
+
+          if (this.lastKnownLocation != undefined && this.closestTrailToLastKnownLocation != undefined) {
+            this.navCtrl.push(EmergencyInformationDisplayPage, {
+              latitude: this.lastKnownLocation.lat,                                             
+              longitude: this.lastKnownLocation.lng,                                  
+              nearestTrail: this.closestTrailToLastKnownLocation
+            });
+          } else {
+            this.navCtrl.push(EmergencyInformationDisplayPage, {
+              latitude: "Unknown",                                             
+              longitude: "Unknown",                                  
+              nearestTrail: "Unknown"
+            });
+          }
+
         }
       },
       {
@@ -203,14 +215,7 @@ export class MapPage {
  }
 
  sendAlertToEmerContact() {
-
-  this.locate();
-  var message = 'John Doe has initiated a call to 9-1-1. Their last known location is the coordinates Latitude: ' + this.lastKnownLocation.lat + ' Longitiude: ' + this.lastKnownLocation.lng + ' The nearest location is: ' + this.closestTrailToLastKnownLocation;
-
-
-
-  console.log(message);
-  this.storage.get('contacts').then((val) => {
+  this.storage.get('emergencyContacts').then((val) => {
     console.log("Emergency Contact is: " + val);
     if (val != null) {
       this.contact = val[0];
@@ -222,14 +227,33 @@ export class MapPage {
         }
       };
 
+      console.log("Last Known Location is: ", this.lastKnownLocation);
+
       this.locate();
+      this.storage.get('userDetails').then((res) => {
 
-      var message = 'John Doe has initiated a call to 9-1-1. Their last known location is the coordinates (Latitude: ' + this.lastKnownLocation.lat + ' Longitiude: ' + this.lastKnownLocation.lng;
-      console.log(message);
+        var firstname = res.first_name;
+        var lastname = res.last_name;
 
-      this.sms.send(this.contact.primaryPhone, message, options)
-        .then(() => {alert("sent")});
+        if (this.lastKnownLocation != undefined && this.closestTrailToLastKnownLocation != undefined) {
+          var message = firstname + ' ' + lastname + ' has initiated a call to 9-1-1. Their last known location is the coordinates Latitude: ' + this.lastKnownLocation.lat + ' Longitude: ' + this.lastKnownLocation.lng + ' and the closest nearby trail is: ' + this.closestTrailToLastKnownLocation;
+        } else {
+          var message = firstname + ' ' + lastname + ' has initiated a call to 9-1-1. We are unable to determine their last known location.';
+        }
+        console.log(message);
+        this.sms.send(this.contact.primaryPhone, message, options).then(response => {this.showToast("Message Sent to Emergency Contact")}, err => {this.showToast("Message canceled")});
+      });
     }
   });
  }
+
+ public showToast(data) {
+  let newToast = this.toastCtrl.create({
+    message: data,
+    duration: 1000,
+    position: 'middle'
+  });
+
+  newToast.present();
+}
 }

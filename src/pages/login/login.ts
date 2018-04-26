@@ -76,6 +76,12 @@ export class LoginPage {
 
         this.storage.set('userDetails', res);
       });
+
+
+      this.http.get('https://nwa-trails-webservice.herokuapp.com/profilepicture/get/' + username).subscribe((profilePicture) => {
+        console.log("Received profile picture: ", profilePicture);
+        this.storage.set('profilePicture', profilePicture);
+      });
     });
   }
 
