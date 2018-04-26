@@ -70,7 +70,7 @@ export class AccountPage {
     this.camera.getPicture(options).then((imageData) => {
       this.base64Image = "data:image/jpeg;base64," + imageData;
 
-      let cameraImageSelector = document.getElementById('camera-image');
+      let cameraImageSelector = document.getElementById('account-image');
       cameraImageSelector.setAttribute('src', this.base64Image);
 
     }).catch( err => {
