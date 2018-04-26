@@ -13,8 +13,8 @@
 
   <div style="width: 100%; text-align: center; position: relative;">
     <div style="display: inline-block; height: 50%; width: 50%;">
-      <img id="camera-image" />
-      <img src="assets/imgs/condition.png" *ngIf="!picture" />
+      <img id="condi-picture" />
+      <img src="assets/imgs/condition.png" *ngIf="!condiPicture" />
     </div>
     <div style="position: absolute; right: 14%; bottom: 0">
       <button ion-button round icon-only (click)="takePicture()">
