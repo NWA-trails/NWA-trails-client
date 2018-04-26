@@ -26,7 +26,7 @@ export class AccountPage {
     height: "",
     weight: "",
     role: ""
-  }
+  };
 
   formResult = {
     "personalName": "",
@@ -34,6 +34,11 @@ export class AccountPage {
     "dateOfBirth": "",
     "height": "",
     "weight": ""
+  };
+
+  testImage = {
+    username: "",
+    image: ""
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -79,9 +84,15 @@ export class AccountPage {
   }
 
   saveDetailsChanges() {
+    console.log("Saving changes...");
     this.isEditing = false;
 
-    
+    this.testImage.image = this.base64Image;
+    this.testImage.username = this.displayDetails.username;
+    this.http.put('https://nwa-trails-webservice.herokuapp.com/profilepicture/update', this.testImage).subscribe((res) => {
+      console.log("Updated Picture");
+    });
+
     for (var property in this.formResult) {
       if (this.formResult[property] != "") {
         this.displayDetails[property] = this.formResult[property];
@@ -96,6 +107,7 @@ export class AccountPage {
     }
 
     this.http.post('https://nwa-trails-webservice.herokuapp.com/accountInformation/updateAccountInformation', userPersonalInformation);
+    
   }
 
   cancelDetailsChanges() {
