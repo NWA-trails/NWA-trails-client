@@ -14,8 +14,8 @@
 
       <div style="width: 100%; text-align: center; position: relative;">
           <div style="display: inline-block; height: 50%; width: 50%;">
-            <img id="account-image"/>
-            <img src="assets/imgs/default_avatar.png" *ngIf="!base64Image"/>
+            <img class="circle-pic" id="account-image"/>
+            <img class="circle-pic" src="assets/imgs/default_avatar.png" *ngIf="!base64Image"/>
           </div>
           <div *ngIf="isEditing" style="position: absolute; right: 14%; bottom: 0">
             <button ion-button round icon-only (click)="takePicture()">
@@ -96,7 +96,7 @@
                   </button>
                 </div>
                 <div style="width: 50%; float: right; padding:2%;">
-                  <button ion-button block (click)='cancelDetailsChanges()'>
+                  <button ion-button block type="button" (click)='cancelDetailsChanges()'>
                     CANCEL
                   </button>
                 </div>

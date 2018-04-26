@@ -75,7 +75,6 @@ export class MapPage {
       this.lastKnownLocation = e.latlng;
       var radius = 25;
       if(this.map == undefined) alert("map is undefined");
-     this.nearBy(e.latlng);
      if(!circle)
         circle = leaflet.circle(e.latlng, radius).addTo(this.map);
      else
@@ -127,16 +126,10 @@ export class MapPage {
   {
 
    var index = leafletKnn(leaflet.geoJSON(trailJSON)).nearest(latlng, 1, 1000);
-    //index.nearest(latlng, 1,10);
-    //show me something
-    console.log("Index is: " + index);
     if (index !== undefined) {
-      console.log("Closest trail is: " + index[0].layer.feature.properties.first_prim_name);
-      this.storage.set('closestTrail',index[0].layer.feature.properties.first_prim_name);
       this.closestTrailToLastKnownLocation = index[0].layer.feature.properties.first_prim_name;
     } else {
-      console.log("Could not find a nearby trail :(");
-      this.storage.set('closestTrail', 'No closest Trail');
+      this.closestTrailToLastKnownLocation = 'No closest Trail';
     }
 
 }
