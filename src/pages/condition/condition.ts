@@ -57,7 +57,7 @@ export class ConditionPage {
   showAlert() {
     let alert = this.alertCtrl.create({
       title: 'Help',
-      subTitle: '<p> The purpose of this screen is to report any adverse trail conditions to trail managers as well as fellow app users. <br /> To submit a notice: <br /> 1. Take a picture of the problem. <br /> 2. Right a brief description describing the problem. <br /> 3. Press Submit!</p>',
+      subTitle: '<p> The purpose of this screen is to report any adverse trail conditions to trail managers as well as fellow app users. <br /> To submit a notice: <br /> 1. Take a picture of the problem. <br /> 2. Write a brief description describing the problem. <br /> 3. Press Submit!</p>',
       buttons: ['OK']
     });
     alert.present();
