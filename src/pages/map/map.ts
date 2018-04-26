@@ -75,7 +75,6 @@ export class MapPage {
       this.lastKnownLocation = e.latlng;
       var radius = e.accuracy / 3;
       if(this.map == undefined) alert("map is undefined");
-     this.nearBy(e.latlng);
      if(!circle)
         circle = leaflet.circle(e.latlng, radius).addTo(this.map);
      else
@@ -127,18 +126,12 @@ export class MapPage {
   {
 
    var index = leafletKnn(leaflet.geoJSON(trailJSON)).nearest(latlng, 1, 1000);
-    //index.nearest(latlng, 1,10);
-    //show me something
-    console.log("Index is: " + index);
     if (index !== undefined) {
-      console.log("Closest trail is: " + index[0].layer.feature.properties.first_prim_name);
-      this.storage.set('closestTrail',index[0].layer.feature.properties.first_prim_name);
       this.closestTrailToLastKnownLocation = index[0].layer.feature.properties.first_prim_name;
     } else {
-      console.log("Could not find a nearby trail :(");
-      this.storage.set('closestTrail', 'No closest Trail');
+      this.closestTrailToLastKnownLocation = 'No closest Trail';
     }
-    
+
 }
 
   onTouch() {
@@ -184,8 +177,8 @@ export class MapPage {
           //this.emergencyCall();
           console.log("Latitude: " + this.lastKnownLocation.lat);
           this.navCtrl.push(EmergencyInformationDisplayPage, {
-            latitude: this.lastKnownLocation.lat,                                             
-            longitude: this.lastKnownLocation.lng,                                  
+            latitude: this.lastKnownLocation.lat,
+            longitude: this.lastKnownLocation.lng,
             nearestTrail: this.closestTrailToLastKnownLocation
           });
         }
@@ -210,12 +203,12 @@ export class MapPage {
  }
 
  sendAlertToEmerContact() {
-  
+
   this.locate();
   var message = 'John Doe has initiated a call to 9-1-1. Their last known location is the coordinates Latitude: ' + this.lastKnownLocation.lat + ' Longitiude: ' + this.lastKnownLocation.lng + ' The nearest location is: ' + this.closestTrailToLastKnownLocation;
-  
-  
-  
+
+
+
   console.log(message);
   this.storage.get('contacts').then((val) => {
     console.log("Emergency Contact is: " + val);
@@ -233,7 +226,7 @@ export class MapPage {
 
       var message = 'John Doe has initiated a call to 9-1-1. Their last known location is the coordinates (Latitude: ' + this.lastKnownLocation.lat + ' Longitiude: ' + this.lastKnownLocation.lng;
       console.log(message);
-    
+
       this.sms.send(this.contact.primaryPhone, message, options)
         .then(() => {alert("sent")});
     }
