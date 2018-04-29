@@ -27,6 +27,7 @@ import { HTTP } from '@ionic-native/http';
 import { HttpClientModule } from '@angular/common/http';
 import { LongPressModule } from 'ionic-long-press';
 import { SMS } from '@ionic-native/sms';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AuthenticationServiceProvider } from '../providers/authentication-service/authentication-service';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -78,6 +79,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     SMS,
     File,
     HTTP,
+    InAppBrowser,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
     AuthenticationServiceProvider
