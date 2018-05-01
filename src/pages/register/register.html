@@ -14,6 +14,16 @@
 
 
 <ion-content class="login-content" padding>
+  <div class="smart911-box" (click)="smart911Link()">
+    <p class="smart911-text">Please sign up for Smart911 at
+      <span class="smart911-link">https://www.smart911.com/</span>
+    </p>
+    <p class="smart911-text">By creating an account with Smart911, emergency
+      dispatchers are able to better locate you in the case of an emergency.
+      If you ever call 9-1-1, the call taker can use your information to save
+      valuable time when seconds count.
+    </p>
+  </div>
   <div class="login-box">
 
     <form (ngSubmit)="register()" #registerForm="ngForm">

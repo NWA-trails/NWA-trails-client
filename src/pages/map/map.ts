@@ -71,11 +71,10 @@ export class MapPage {
 
     }).on("locationfound", e => {
       console.log("locations found: " + e.latlng);
-
+      this.nearBy(e.latlng);
       this.lastKnownLocation = e.latlng;
       var radius = 25;
       if(this.map == undefined) alert("There is an error with the map.");
-      this.nearBy(e.latlng);
      if(!circle)
         circle = leaflet.circle(e.latlng, radius).addTo(this.map);
      else
@@ -158,11 +157,12 @@ export class MapPage {
   }
 
   emergencyCall() {
-    var phoneNumber = "4699551980";
+    var phoneNumber = "479-387-7620";
+    console.log("emergency call");
     this.callNumber.callNumber(phoneNumber, true)
-    .then(() => console.log('Launched dialer: ' + phoneNumber))
-    .catch(() => console.log('Error launching dialer'));
-    
+      .then(() => console.log('Launched dialer: '+phoneNumber))
+      .catch(() => console.log('Error launching dialer'));
+
  }
 
  verifyEmergencyCall() {

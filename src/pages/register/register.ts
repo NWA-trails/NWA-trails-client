@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AuthenticationServiceProvider } from '../../providers/authentication-service/authentication-service';
 
 /**
@@ -21,7 +22,8 @@ export class RegisterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController,
-    public authenticationServiceProvider: AuthenticationServiceProvider) {
+    public authenticationServiceProvider: AuthenticationServiceProvider,
+    public inAppBrowser: InAppBrowser) {
   }
 
   ionViewDidLoad() {
@@ -56,6 +58,10 @@ export class RegisterPage {
       ]
     });
     alert.present();
+  }
+
+  public smart911Link() {
+    window.open('https://www.smart911.com/', '_system');
   }
 
 }
