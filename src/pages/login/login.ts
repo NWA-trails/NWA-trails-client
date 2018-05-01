@@ -81,6 +81,9 @@ export class LoginPage {
       this.http.get('https://nwa-trails-webservice.herokuapp.com/profilepicture/get/' + username).subscribe((profilePicture) => {
         console.log("Received profile picture: ", profilePicture);
         this.storage.set('profilePicture', profilePicture);
+      },
+      (err) => {
+        console.log("Error when gettin profile picture", err);
       });
     });
   }

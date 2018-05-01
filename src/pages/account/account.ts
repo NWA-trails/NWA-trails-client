@@ -16,6 +16,7 @@ export class AccountPage {
 
   isEditing: boolean = false;
   public base64Image: string;
+  public rawImage: string;
 
   displayDetails: AccountDetails = {
     username: "",
@@ -29,11 +30,9 @@ export class AccountPage {
   };
 
   formResult = {
-    "personalName": "",
-    "email": "",
-    "dateOfBirth": "",
-    "height": "",
-    "weight": ""
+    dateofbirth: "",
+    height: "",
+    weight: ""
   };
 
   testImage = {
@@ -58,7 +57,8 @@ export class AccountPage {
                 this.storage.get('profilePicture').then((picture) => {
                   if (picture) {
                     if (picture.image != "") {
-                      this.base64Image = picture.image;
+                      this.rawImage = picture.image;
+                      this.base64Image = "data:image/jpeg;base64," + picture.image;
                       let cameraImageSelector = document.getElementById('account-image');
                       cameraImageSelector.setAttribute('src', this.base64Image);
                     }
@@ -84,6 +84,7 @@ export class AccountPage {
 
     this.camera.getPicture(options).then((imageData) => {
       this.base64Image = "data:image/jpeg;base64," + imageData;
+      this.rawImage = imageData;
 
       let cameraImageSelector = document.getElementById('account-image');
       cameraImageSelector.setAttribute('src', this.base64Image);
@@ -97,12 +98,13 @@ export class AccountPage {
     console.log("Saving changes...");
     this.isEditing = false;
 
-    this.testImage.image = this.base64Image;
+    this.testImage.image = this.rawImage;
     this.testImage.username = this.displayDetails.username;
     this.http.put('https://nwa-trails-webservice.herokuapp.com/profilepicture/update', this.testImage).subscribe((res) => {
       console.log("Updated Picture");
     });
 
+    console.log("Form data is: ", this.formResult);
     for (var property in this.formResult) {
       if (this.formResult[property] != "") {
         this.displayDetails[property] = this.formResult[property];
@@ -116,7 +118,11 @@ export class AccountPage {
       weight: this.displayDetails.weight
     }
 
-    this.http.post('https://nwa-trails-webservice.herokuapp.com/accountInformation/updateAccountInformation', userPersonalInformation);
+    console.log("Uopdating account information: ", userPersonalInformation);
+
+    this.http.post('https://nwa-trails-webservice.herokuapp.com/accountInformation/updateAccountInformation', userPersonalInformation).subscribe((res) => {
+      console.log("Updated account information");
+    });
 
   }
 
